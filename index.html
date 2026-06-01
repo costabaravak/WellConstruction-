@@ -3,212 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inteligencia de Categorías — Well Construction</title>
+<title>Frameworks aplicados — Well Construction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0c1419; --panel:#121e26; --panel2:#16242e; --line:#23363f;
-    --ink:#e8eef0; --muted:#8aa0a8; --faint:#5f757d;
-    --amber:#f0a830; --amber-soft:#f0a83022;
-    --verde:#3fb27f; --amarillo:#e6b53c; --rojo:#e26d6d; --gris:#6b7d84;
-    --teal:#4fb3c4;
+    --bg:#0b1116; --panel:#111a21; --panel2:#15212a; --line:#22323d;
+    --ink:#e9eff1; --soft:#93a4ad; --faint:#637680;
+    --oil:#e8913a;      /* ámbar perforación */
+    --teal:#46b4c4;
+    --green:#46b07c; --yellow:#d6a83a; --red:#d9685f; --grey:#6b7d86;
+    --pyr:#b58be0;
+    --sh:0 18px 40px -28px #000;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{
-    background:var(--bg); color:var(--ink);
-    font-family:'Archivo',sans-serif; line-height:1.55;
-    background-image:
-      radial-gradient(900px 500px at 85% -5%, #16323a55, transparent),
-      radial-gradient(700px 400px at 0% 100%, #1a2a1f44, transparent);
-    background-attachment:fixed;
-  }
-  .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
-  ::selection{background:var(--amber); color:#0c1419}
+  body{background:var(--bg); color:var(--ink); font-family:'Hanken Grotesk',sans-serif; line-height:1.55;
+    background-image:radial-gradient(900px 480px at 92% -8%, #1a3a4055, transparent), radial-gradient(700px 400px at -5% 100%, #2a1f1244, transparent); background-attachment:fixed}
+  .wrap{max-width:980px; margin:0 auto; padding:0 24px}
+  ::selection{background:var(--oil); color:#0b1116}
 
-  /* HEADER */
-  header{padding:64px 0 40px; border-bottom:1px solid var(--line)}
-  .kicker{font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:3px;
-    text-transform:uppercase; color:var(--amber); margin-bottom:18px}
-  h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(34px,5.2vw,60px);
-    line-height:1.02; letter-spacing:-0.5px; margin-bottom:18px}
-  h1 em{font-style:italic; color:var(--amber)}
-  .lede{max-width:640px; color:var(--muted); font-size:17px}
+  header{padding:66px 0 34px; border-bottom:1px solid var(--line)}
+  .eye{font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:2px; text-transform:uppercase; color:var(--oil); margin-bottom:18px}
+  h1{font-family:'Schibsted Grotesk',sans-serif; font-weight:800; font-size:clamp(33px,5.3vw,58px); line-height:1.02; letter-spacing:-1.2px; margin-bottom:18px}
+  h1 em{font-style:normal; color:var(--oil)}
+  .lede{max-width:650px; color:var(--soft); font-size:16.5px}
+  .lede b{color:var(--ink)}
 
-  section{padding:54px 0; border-bottom:1px solid var(--line)}
-  .sec-label{font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:2px;
-    color:var(--faint); text-transform:uppercase; margin-bottom:10px}
-  h2{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(24px,3.4vw,34px);
-    letter-spacing:-0.3px; margin-bottom:8px}
-  .sec-sub{color:var(--muted); max-width:660px; margin-bottom:34px; font-size:15.5px}
+  section{padding:48px 0; border-bottom:1px solid var(--line)}
+  .lab{display:flex; align-items:center; gap:11px; margin-bottom:8px}
+  .ld{width:10px; height:10px; border-radius:3px; flex-shrink:0}
+  .lk{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faint)}
+  h2{font-family:'Schibsted Grotesk',sans-serif; font-weight:700; font-size:clamp(22px,3.4vw,31px); letter-spacing:-0.5px; margin-bottom:8px}
+  .sub{color:var(--soft); max-width:680px; margin-bottom:26px; font-size:15px}
+  .sub b{color:var(--ink)}
 
-  /* THREE FRONTS */
-  .fronts{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:30px}
-  .front{background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    padding:24px 22px; position:relative; overflow:hidden; transition:.35s}
-  .front:hover{transform:translateY(-4px); border-color:var(--amber)}
-  .front .n{font-family:'Spline Sans Mono',monospace; font-size:12px; color:var(--amber); margin-bottom:14px}
-  .front h3{font-family:'Archivo'; font-weight:700; font-size:18px; margin-bottom:8px}
-  .front p{color:var(--muted); font-size:13.5px}
-  .front .bar{position:absolute; left:0; top:0; height:3px; width:100%; background:linear-gradient(90deg,var(--amber),transparent)}
-  .merge{text-align:center; margin:6px 0 0}
-  .merge .arrow{color:var(--faint); font-size:22px; line-height:1}
-  .capability{margin-top:22px; background:linear-gradient(135deg,#16242e,#14201f);
-    border:1px solid var(--amber); border-radius:14px; padding:26px; text-align:center}
-  .capability .t{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:2px;
-    color:var(--amber); text-transform:uppercase; margin-bottom:10px}
-  .capability .g{font-family:'Fraunces',serif; font-size:22px; font-weight:500}
+  /* reframe trio */
+  .trio{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .tc{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:20px; box-shadow:var(--sh)}
+  .tc .h{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px}
+  .tc.sy .h{color:var(--red)} .tc.rc .h{color:var(--yellow)} .tc.st .h{color:var(--green)}
+  .tc p{font-size:14px; color:var(--ink)} .tc p b{color:var(--oil)}
+  @media(max-width:640px){.trio{grid-template-columns:1fr}}
 
-  /* FLOW CHAIN */
-  .chain{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
-  .node{flex:1; min-width:150px; background:var(--panel); border:1px solid var(--line);
-    border-radius:13px; padding:20px 18px; position:relative; transition:.3s}
-  .node:hover{background:var(--panel2); border-color:var(--teal)}
-  .node .step{font-family:'Spline Sans Mono',monospace; font-size:11px; color:var(--teal); margin-bottom:9px}
-  .node h4{font-size:15px; font-weight:700; margin-bottom:6px}
-  .node p{font-size:12.5px; color:var(--muted)}
-  .connector{display:flex; align-items:center; justify-content:center; width:34px; color:var(--amber); font-size:20px; flex-shrink:0}
-  @media(max-width:760px){.connector{width:100%; height:26px; transform:rotate(90deg)}}
+  /* gap table */
+  .gap{display:grid; grid-template-columns:1fr auto 1fr; align-items:stretch}
+  .gc{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px 20px; box-shadow:var(--sh)}
+  .gc h4{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px}
+  .gc.n h4{color:var(--red)} .gc.g h4{color:var(--green)}
+  .gc ul{list-style:none} .gc li{font-size:13.5px; padding:6px 0 6px 17px; position:relative; border-bottom:1px dashed var(--line)}
+  .gc li:last-child{border-bottom:none}
+  .gc.n li::before{content:"–"; position:absolute; left:0; color:var(--red); font-weight:700}
+  .gc.g li::before{content:"+"; position:absolute; left:0; color:var(--green); font-weight:700}
+  .ga{display:flex; align-items:center; justify-content:center; width:50px; color:var(--oil); font-family:'Spline Sans Mono',monospace; font-size:12px}
+  @media(max-width:620px){.gap{grid-template-columns:1fr} .ga{width:100%;height:34px;transform:rotate(90deg)}}
 
-  /* SEMAFORO */
-  .sema{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
-  .light{background:var(--panel); border:1px solid var(--line); border-radius:13px;
-    padding:20px; border-top:4px solid var(--c); transition:.3s; cursor:default}
-  .light:hover{transform:translateY(-3px)}
-  .light .dot{width:14px; height:14px; border-radius:50%; background:var(--c);
-    box-shadow:0 0 14px var(--c); margin-bottom:13px}
-  .light h4{font-size:15px; font-weight:700; margin-bottom:5px}
-  .light .lab{font-family:'Spline Sans Mono',monospace; font-size:10.5px;
-    text-transform:uppercase; letter-spacing:1.5px; color:var(--c); margin-bottom:9px}
-  .light p{font-size:12.5px; color:var(--muted)}
+  /* logic tree WC */
+  .lt{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:22px; box-shadow:var(--sh)}
+  .lt .root{font-family:'Spline Sans Mono',monospace; font-size:12px; color:var(--teal); font-weight:600; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line)}
+  .cats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px}
+  .cat{background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-size:12.5px; font-weight:600}
+  .streams{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
+  .stream{border-top:3px solid var(--oil); background:var(--panel2); border-radius:0 0 9px 9px; padding:12px 13px}
+  .stream .n{font-family:'Spline Sans Mono',monospace; font-size:10px; color:var(--oil); margin-bottom:5px}
+  .stream h5{font-size:13.5px; font-weight:700; margin-bottom:4px}
+  .stream p{font-size:11.5px; color:var(--soft)}
+  @media(max-width:680px){.cats{grid-template-columns:repeat(2,1fr)} .streams{grid-template-columns:repeat(2,1fr)}}
 
-  /* KPI -> DECISION */
-  .kpis{display:flex; flex-direction:column; gap:14px}
-  .kpi{display:grid; grid-template-columns:1.1fr auto 1.3fr; align-items:center; gap:18px;
-    background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px 22px; transition:.3s}
-  .kpi:hover{border-color:var(--amber); background:var(--panel2)}
-  .kpi .left .cat{font-family:'Spline Sans Mono',monospace; font-size:11px; color:var(--faint); margin-bottom:4px}
-  .kpi .left .name{font-weight:700; font-size:16px; display:flex; align-items:center; gap:9px}
-  .kpi .pill{width:10px; height:10px; border-radius:50%; flex-shrink:0}
-  .kpi .mid{font-family:'Spline Sans Mono',monospace; color:var(--amber); font-size:20px}
-  .kpi .right .lab{font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--teal); margin-bottom:5px}
-  .kpi .right .dec{font-size:14px; color:var(--ink)}
-  @media(max-width:680px){.kpi{grid-template-columns:1fr} .kpi .mid{transform:rotate(90deg); justify-self:start}}
+  /* yes/no tree */
+  .yn{display:flex; flex-direction:column; gap:0}
+  .ynrow{display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:14px;
+    background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:15px 18px; margin-bottom:10px; box-shadow:var(--sh)}
+  .ynq{font-size:14px; font-weight:600}
+  .ynno{font-family:'Spline Sans Mono',monospace; font-size:11.5px; display:flex; align-items:center; gap:8px}
+  .bucket{display:inline-flex; align-items:center; gap:7px; font-weight:700; font-size:12.5px; padding:4px 10px; border-radius:20px}
+  .dotc{width:10px;height:10px;border-radius:50%}
+  .b-red{background:#d9685f1f; color:var(--red)} .b-yellow{background:#d6a83a1f; color:var(--yellow)}
+  .b-grey{background:#6b7d861f; color:var(--grey)} .b-green{background:#46b07c1f; color:var(--green)}
+  .ynfin{text-align:center; font-family:'Spline Sans Mono',monospace; font-size:11px; color:var(--faint); margin-top:2px}
 
-  /* FOOTER NOTE */
-  .note{background:var(--amber-soft); border:1px solid #f0a83055; border-radius:13px;
-    padding:22px 24px; display:flex; gap:16px; align-items:flex-start}
-  .note .ic{font-family:'Fraunces',serif; font-size:30px; color:var(--amber); line-height:1}
-  .note p{font-size:15px; color:var(--ink)}
-  .note strong{color:var(--amber)}
-  footer{padding:40px 0 70px; color:var(--faint); font-size:12.5px;
-    font-family:'Spline Sans Mono',monospace; text-align:center}
+  /* pyramid */
+  .pyr{display:flex; flex-direction:column; align-items:center; gap:10px}
+  .ptop{background:linear-gradient(135deg,#1c2b34,#19232b); border:1px solid var(--pyr); border-radius:12px; padding:18px 26px; text-align:center; max-width:560px; box-shadow:var(--sh)}
+  .ptop .k{font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--pyr); margin-bottom:7px}
+  .ptop .c{font-family:'Schibsted Grotesk',sans-serif; font-weight:700; font-size:17px}
+  .pbase{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:100%}
+  .pb{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:14px 15px}
+  .pb .n{font-family:'Spline Sans Mono',monospace; font-size:10px; color:var(--pyr); margin-bottom:5px}
+  .pb p{font-size:12.5px; color:var(--ink)}
+  @media(max-width:600px){.pbase{grid-template-columns:1fr}}
 
-  .reveal{opacity:0; transform:translateY(22px); transition:.7s cubic-bezier(.2,.7,.2,1)}
+  /* design plan table */
+  .dp{width:100%; border-collapse:collapse; background:var(--panel); border-radius:13px; overflow:hidden; box-shadow:var(--sh); font-size:13px}
+  .dp th{background:var(--panel2); text-align:left; padding:12px 14px; font-family:'Spline Sans Mono',monospace; font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--teal); border-bottom:1px solid var(--line)}
+  .dp td{padding:12px 14px; border-bottom:1px solid var(--line); color:var(--soft); vertical-align:top}
+  .dp td:first-child{color:var(--ink); font-weight:600}
+  .dp tr:last-child td{border-bottom:none}
+
+  /* principles guardrails */
+  .guard{display:grid; grid-template-columns:repeat(2,1fr); gap:13px}
+  .gr{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:11px; padding:16px 18px; box-shadow:var(--sh)}
+  .gr .t{font-weight:700; font-size:15px; margin-bottom:5px}
+  .gr p{font-size:13px; color:var(--soft)}
+  .gr p b{color:var(--ink)}
+  @media(max-width:640px){.guard{grid-template-columns:1fr}}
+
+  /* rhythm */
+  .rhythm{background:var(--oil); color:#0b1116; border-radius:15px; padding:28px; margin-top:6px}
+  .rhythm h3{font-family:'Schibsted Grotesk',sans-serif; font-weight:800; font-size:20px; margin-bottom:6px}
+  .rhythm p{font-size:14px; opacity:.85; margin-bottom:18px; max-width:600px}
+  .rsteps{display:flex; gap:0; flex-wrap:wrap}
+  .rs{flex:1; min-width:120px; background:#0b111622; border:1px solid #0b111630; border-radius:10px; padding:13px 14px}
+  .rs .when{font-family:'Spline Sans Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:5px; font-weight:600}
+  .rs h5{font-size:13.5px; font-weight:800; margin-bottom:3px}
+  .rs p{font-size:11.5px; opacity:.8; margin:0}
+  .rarr{display:flex;align-items:center;justify-content:center;width:24px;color:#0b1116;font-weight:800}
+  @media(max-width:680px){.rarr{width:100%;height:20px;transform:rotate(90deg)}}
+
+  footer{padding:38px 0 70px; color:var(--faint); font-size:11px; font-family:'Spline Sans Mono',monospace; text-align:center; letter-spacing:.5px}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:.6s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1; transform:none}
 </style>
 </head>
 <body>
-
 <div class="wrap">
+
   <header>
-    <div class="kicker reveal">Supply Chain · Well Construction</div>
-    <h1 class="reveal">De tres pedidos a una sola<br><em>capacidad de inteligencia</em> de categorías</h1>
-    <p class="lede reveal">Informes de mercado, TCO + Share Dinámico y Salud de categorías no son tres tareas separadas: son las capas de un mismo sistema cuyo entregable final no es un tablero, sino una decisión de asignación de actividad mejor y defendible.</p>
+    <div class="eye reveal">Frameworks de Problem Solving · aplicados</div>
+    <h1 class="reveal">El método, puesto a trabajar en tu rol de <em>Well Construction</em></h1>
+    <p class="lede reveal">Cada framework de la referencia, aplicado a tus tres frentes: <b>Informes de Mercado, TCO + Share Dinámico y Salud de categorías</b>. No es teoría: es cómo se usa cada herramienta en tu mesa.</p>
   </header>
 
-  <!-- 1. THREE FRONTS -->
-  <section>
-    <div class="sec-label reveal">01 — Los tres frentes</div>
-    <h2 class="reveal">Tres mandatos, un mismo objetivo</h2>
-    <p class="sec-sub reveal">Cada frente aporta una pieza. Juntos responden la pregunta de negocio: ¿a qué proveedor le asigno actividad y por qué?</p>
-    <div class="fronts">
-      <div class="front reveal"><div class="bar"></div><div class="n">FRENTE 01</div><h3>Informes de Mercado</h3><p>Segmentos, market share, precio, performance y TCO por categoría. Formato y criterios unificados, revisión la primera semana de cada mes.</p></div>
-      <div class="front reveal"><div class="bar"></div><div class="n">FRENTE 02</div><h3>TCO + Share Dinámico</h3><p>Modelo de costo total que combina precio, performance y riesgo para asignar actividad entre proveedores. Publicado en tablero a sep./oct.</p></div>
-      <div class="front reveal"><div class="bar"></div><div class="n">FRENTE 03</div><h3>Salud de categorías</h3><p>Mapa de qué tan lista está cada categoría para ser gestionada con datos. Es la capa de confiabilidad de todo lo demás.</p></div>
-    </div>
-    <div class="merge reveal"><div class="arrow">▼ ▼ ▼</div></div>
-    <div class="capability reveal">
-      <div class="t">Capacidad integrada</div>
-      <div class="g">Decidir la asignación de actividad por <em style="color:var(--amber)">valor total</em>, no solo por precio</div>
+  <!-- 1. REFRAME -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Principio · Replantear · Síntoma → causa raíz → estrategia</span></div>
+    <h2>Primero, el problema correcto</h2>
+    <p class="sub">Antes de construir nada, separá lo que se ve de lo que importa. El tablero es una táctica, no el objetivo.</p>
+    <div class="trio">
+      <div class="tc sy"><div class="h">Síntoma</div><p>Cada categoría reporta distinto y no hay TCO ni Share en el tablero.</p></div>
+      <div class="tc rc"><div class="h">Causa raíz</div><p>La actividad se asigna por <b>precio y relación</b>, sin costo total ni criterio común. No se puede comparar ni defender.</p></div>
+      <div class="tc st"><div class="h">Estrategia</div><p>Decidir la asignación por <b>valor total</b>, trazable. Tablero, TCO y Power BI son tácticas a su servicio.</p></div>
     </div>
   </section>
 
-  <!-- 2. FLOW CHAIN -->
-  <section>
-    <div class="sec-label reveal">02 — La cadena del dato a la decisión</div>
-    <h2 class="reveal">Cómo fluye la información</h2>
-    <p class="sec-sub reveal">El relevamiento de Salud alimenta todo lo demás. Sin datos confiables arriba, las decisiones de abajo no se sostienen.</p>
-    <div class="chain">
-      <div class="node reveal"><div class="step">PASO 1</div><h4>Relevamiento</h4><p>Una fila por dato/KPI. Dueño, fuente, estado y semáforo por categoría.</p></div>
-      <div class="connector reveal">→</div>
-      <div class="node reveal"><div class="step">PASO 2</div><h4>Salud + Resumen</h4><p>Semáforo por categoría. Mide si el dato es decidible.</p></div>
-      <div class="connector reveal">→</div>
-      <div class="node reveal"><div class="step">PASO 3</div><h4>TCO</h4><p>Costo total normalizado por unidad de actividad, con datos sanos.</p></div>
-      <div class="connector reveal">→</div>
-      <div class="node reveal"><div class="step">PASO 4</div><h4>Share Dinámico</h4><p>Scoring por proveedor → bandas de asignación de actividad.</p></div>
-      <div class="connector reveal">→</div>
-      <div class="node reveal" style="border-color:var(--amber)"><div class="step" style="color:var(--amber)">DECISIÓN</div><h4>Asignación</h4><p>Defendible y trazable. El modelo orienta; el criterio decide.</p></div>
+  <!-- 2. PROCESS 02 — GOAL GAP applied -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Proceso 02 · El rol como cierre de brecha</span></div>
+    <h2>Tu rol es cerrar una brecha</h2>
+    <p class="sub">No hay algo "roto" que arreglar: hay una <b>meta</b> a alcanzar para sep./oct. Por eso aplica el proceso de meta-brecha.</p>
+    <div class="gap">
+      <div class="gc n"><h4>Situación actual</h4><ul>
+        <li>Criterios distintos por categoría</li>
+        <li>Datos sin dueño definido</li>
+        <li>Sin TCO ni Share publicados</li>
+        <li>Salud de categorías desconocida</li>
+        <li>Decide el precio</li>
+      </ul></div>
+      <div class="ga reveal">brecha →</div>
+      <div class="gc g"><h4>Meta (sep./oct.)</h4><ul>
+        <li>Formato y criterios unificados</li>
+        <li>Cada dato con dueño y fuente</li>
+        <li>TCO + Share en el tablero</li>
+        <li>Salud integrada como capa de confianza</li>
+        <li>Decide el valor total</li>
+      </ul></div>
     </div>
   </section>
 
-  <!-- 3. SEMAFORO -->
-  <section>
-    <div class="sec-label reveal">03 — El semáforo de Salud</div>
-    <h2 class="reveal">Cuatro estados, una acción cada uno</h2>
-    <p class="sec-sub reveal">El color no juzga al equipo: dispara una acción. Cada amarillo y rojo deben tener próxima acción y fecha.</p>
-    <div class="sema">
-      <div class="light reveal" style="--c:var(--verde)"><div class="dot"></div><div class="lab">Verde</div><h4>Sana y decidible</h4><p>Datos completos y vigentes, dueño claro, performance medible, TCO y Share publicados.</p></div>
-      <div class="light reveal" style="--c:var(--amarillo)"><div class="dot"></div><div class="lab">Amarillo</div><h4>Gestionable con reservas</h4><p>Datos parciales o desactualizados, proceso manual. Se decide con supuestos explícitos.</p></div>
-      <div class="light reveal" style="--c:var(--rojo)"><div class="dot"></div><div class="lab">Rojo</div><h4>No decidible</h4><p>Faltan datos clave, sin dueño o sin performance. "Lo miré y está mal." Acción urgente.</p></div>
-      <div class="light reveal" style="--c:var(--gris)"><div class="dot"></div><div class="lab">Gris</div><h4>No relevado</h4><p>Todavía no se miró. Distinto de rojo: ausencia de información, no diagnóstico negativo.</p></div>
-    </div>
-  </section>
-
-  <!-- 4. KPI -> DECISION -->
-  <section>
-    <div class="sec-label reveal">04 — Cada KPI habilita una decisión</div>
-    <h2 class="reveal">El "para qué" de cada indicador</h2>
-    <p class="sec-sub reveal">Si un KPI no habilita ninguna decisión, sobra. Estos son los tres indicadores de ejemplo de la plantilla.</p>
-    <div class="kpis">
-      <div class="kpi reveal">
-        <div class="left"><div class="cat">PERFORACIÓN HIGH SPEC · 🟡</div><div class="name"><span class="pill" style="background:var(--amarillo)"></span>% NPT por equipo</div></div>
-        <div class="mid">→</div>
-        <div class="right"><div class="lab">Decisión que habilita</div><div class="dec">Penalizar o premiar al proveedor en el scoring de performance del Share Dinámico.</div></div>
+  <!-- 3. LOGIC TREE applied -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Herramienta · Árbol lógico (MECE)</span></div>
+    <h2>La hipótesis, descompuesta sin huecos</h2>
+    <p class="sub">La hipótesis para cerrar la brecha —un sistema integrado de inteligencia— se parte en ramas MECE: las 9 categorías críticas, y dentro de cada una, los mismos 4 flujos de trabajo.</p>
+    <div class="lt">
+      <div class="root">SISTEMA DE INTELIGENCIA DE CATEGORÍAS · 9 categorías críticas</div>
+      <div class="cats">
+        <div class="cat">Perforación High Spec</div><div class="cat">Direccional</div><div class="cat">Cementación</div>
+        <div class="cat">Fluidos</div><div class="cat">Fractura</div><div class="cat">Wireline</div>
+        <div class="cat">Stack</div><div class="cat">Coiled Tubing</div><div class="cat">Cabezales</div>
       </div>
-      <div class="kpi reveal">
-        <div class="left"><div class="cat">CEMENTACIÓN · 🟢</div><div class="name"><span class="pill" style="background:var(--verde)"></span>% re-jobs</div></div>
-        <div class="mid">→</div>
-        <div class="right"><div class="lab">Decisión que habilita</div><div class="dec">Ajustar performance del proveedor y revisar continuidad de actividad.</div></div>
-      </div>
-      <div class="kpi reveal">
-        <div class="left"><div class="cat">FRACTURA · 🔴</div><div class="name"><span class="pill" style="background:var(--rojo)"></span>TCO por etapa</div></div>
-        <div class="mid">→</div>
-        <div class="right"><div class="lab">Decisión que habilita</div><div class="dec">Recalcular el Share entre proveedores de fractura por costo total.</div></div>
+      <div class="streams">
+        <div class="stream"><div class="n">RAMA 1</div><h5>Salud</h5><p>Dato, dueño, fuente, estado, semáforo.</p></div>
+        <div class="stream"><div class="n">RAMA 2</div><h5>TCO</h5><p>Costo total por unidad de actividad.</p></div>
+        <div class="stream"><div class="n">RAMA 3</div><h5>Share Dinámico</h5><p>Scoring → bandas de asignación.</p></div>
+        <div class="stream"><div class="n">RAMA 4</div><h5>Informe</h5><p>Mercado, share, precio, estrategia.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- NOTE -->
-  <section style="border-bottom:none">
-    <div class="note reveal">
-      <div class="ic">“</div>
-      <p>El modelo <strong>orienta</strong>, no decide. El TCO y el score de Share son insumos estructurados para la conversación técnica y comercial. Documentá siempre cuándo la decisión se aparta del score y por qué: eso protege el modelo y lo mejora.</p>
+  <!-- 4. YES/NO TREE applied to Salud -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Herramienta · Árbol Sí/No</span></div>
+    <h2>El semáforo de Salud es un árbol Sí/No</h2>
+    <p class="sub">Tu relevamiento de Salud <b>es</b> esta herramienta: preguntas sí/no encadenadas que mandan cada categoría a un balde. Todas caen en uno, sin excepción.</p>
+    <div class="yn">
+      <div class="ynrow"><div class="ynq">¿La categoría está relevada?</div><div class="ynno">no →</div><span class="bucket b-grey"><span class="dotc" style="background:var(--grey)"></span>Gris</span></div>
+      <div class="ynrow"><div class="ynq">¿Tiene datos clave con dueño y fuente?</div><div class="ynno">no →</div><span class="bucket b-red"><span class="dotc" style="background:var(--red)"></span>Rojo</span></div>
+      <div class="ynrow"><div class="ynq">¿La performance es medible y vigente?</div><div class="ynno">parcial →</div><span class="bucket b-yellow"><span class="dotc" style="background:var(--yellow)"></span>Amarillo</span></div>
+      <div class="ynrow"><div class="ynq">¿TCO y Share publicados y actualizados?</div><div class="ynno">sí →</div><span class="bucket b-green"><span class="dotc" style="background:var(--green)"></span>Verde</span></div>
+    </div>
+    <div class="ynfin">Cada "no" o "parcial" deriva en una próxima acción con responsable y fecha.</div>
+  </section>
+
+  <!-- 5. HYPOTHESIS PYRAMID applied to Share recommendation -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--pyr)"></span><span class="lk">Herramienta · Pirámide de hipótesis</span></div>
+    <h2>Cómo se presenta una recomendación de Share</h2>
+    <p class="sub">Cuando llevás una decisión de asignación al foro, estructurala así: la conclusión arriba, los tres fundamentos como base. Es una estructura de <b>argumento</b>: si un fundamento cae, hay que revisar la conclusión.</p>
+    <div class="pyr">
+      <div class="ptop"><div class="k">Conclusión</div><div class="c">Reasignar X% de la actividad de Fractura al proveedor B en el próximo ciclo</div></div>
+      <div class="pbase">
+        <div class="pb"><div class="n">FUNDAMENTO 1 · TCO</div><p>Menor costo total por etapa, no solo menor precio.</p></div>
+        <div class="pb"><div class="n">FUNDAMENTO 2 · Performance</div><p>Menor NPT y mejor cumplimiento operativo.</p></div>
+        <div class="pb"><div class="n">FUNDAMENTO 3 · Riesgo</div><p>Reduce la concentración por debajo del tope de dependencia.</p></div>
+      </div>
     </div>
   </section>
 
-  <footer class="reveal">INTELIGENCIA DE CATEGORÍAS · WELL CONSTRUCTION · SUPPLY CHAIN</footer>
+  <!-- 6. DESIGN PLAN applied to TCO -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Herramienta · Plan de diseño</span></div>
+    <h2>Antes de perseguir datos para el TCO</h2>
+    <p class="sub">No salgas a juntar planillas. Definí primero qué pregunta responde cada dato. Ejemplo para una categoría piloto:</p>
+    <table class="dp">
+      <tr><th>Hipótesis a probar</th><th>Dato / análisis necesario</th><th>Fuente</th></tr>
+      <tr><td>El precio bajo de un proveedor esconde mayor costo total</td><td>NPT y retrabajos costeados por proveedor</td><td>Sistema operativo de pozo</td></tr>
+      <tr><td>Hay sobre-concentración en un proveedor</td><td>Share actual de actividad por proveedor</td><td>OC / asignación</td></tr>
+      <tr><td>El TCO unitario es comparable entre proveedores</td><td>Costo total ÷ unidad de actividad (etapa, metro, día)</td><td>Facturación + actividad</td></tr>
+    </table>
+  </section>
+
+  <!-- 7. PRINCIPLES as guardrails -->
+  <section class="reveal">
+    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Principios · Guardrails de decisión</span></div>
+    <h2>Las reglas que protegen el modelo</h2>
+    <p class="sub">Aplicadas a las decisiones que vas a tomar todas las semanas.</p>
+    <div class="guard">
+      <div class="gr"><div class="t">Estrategia &gt; táctica</div><p>Si una categoría pide "más tablero", preguntá <b>qué decisión</b> no se puede tomar hoy. El tablero existe para eso.</p></div>
+      <div class="gr"><div class="t">Síntoma ≠ causa raíz</div><p>"El proveedor es caro" es síntoma. La causa puede ser un alcance contractual mal definido o NPT no costeado.</p></div>
+      <div class="gr"><div class="t">Inputs &gt; outputs</div><p>Una buena decisión de Share puede tener mal resultado por un factor externo. Juzgá la <b>calidad de la decisión</b>, no solo el resultado.</p></div>
+      <div class="gr"><div class="t">1er orden vs. 2do orden</div><p>El proveedor más barato hoy (1er orden positivo) puede ser el de peor TCO mañana (2do orden negativo). El TCO captura justo eso.</p></div>
+      <div class="gr"><div class="t">Tan simple como sea posible</div><p>Usá el mínimo de variables que explique la decisión. Un modelo simple que se usa le gana a uno complejo abandonado.</p></div>
+      <div class="gr"><div class="t">El modelo orienta, no decide</div><p>El score es insumo para la conversación técnica/comercial. Documentá cuándo te apartás de él y por qué.</p></div>
+    </div>
+  </section>
+
+  <!-- 8. OPERATING RHYTHM -->
+  <section class="reveal" style="border-bottom:none">
+    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Puesta en marcha · Ritmo operativo</span></div>
+    <h2>El método como rutina mensual</h2>
+    <p class="sub">Los dos procesos se vuelven un ciclo que se repite cada mes en la primera semana.</p>
+    <div class="rhythm">
+      <h3>El ciclo de cada categoría</h3>
+      <p>Encuadrar la decisión pendiente, relevar la Salud (árbol Sí/No), modelar/actualizar el TCO, calcular el Share y llevar la recomendación al foro como pirámide.</p>
+      <div class="rsteps">
+        <div class="rs"><div class="when">Encuadrar</div><h5>¿Qué decido?</h5><p>La decisión de asignación pendiente.</p></div>
+        <div class="rarr">→</div>
+        <div class="rs"><div class="when">Salud</div><h5>¿Es decidible?</h5><p>Semáforo Sí/No por categoría.</p></div>
+        <div class="rarr">→</div>
+        <div class="rs"><div class="when">TCO + Share</div><h5>Modelar</h5><p>Costo total y scoring.</p></div>
+        <div class="rarr">→</div>
+        <div class="rs"><div class="when">Foro</div><h5>Recomendar</h5><p>Pirámide al decisor.</p></div>
+        <div class="rarr">→</div>
+        <div class="rs"><div class="when">Aprender</div><h5>Ajustar</h5><p>Validar resultado, refinar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="reveal">FRAMEWORKS APLICADOS · WELL CONSTRUCTION · SUPPLY CHAIN</footer>
+
 </div>
-
 <script>
-  const io=new IntersectionObserver((es)=>{
-    es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'), (i%6)*70); io.unobserve(e.target);} });
-  },{threshold:.12});
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
-
