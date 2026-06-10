@@ -54,16 +54,20 @@ main{max-width:1220px;margin:0 auto;padding:24px 28px 50px}
 .rankmsg{margin-top:10px;padding:9px 12px;background:#F2F6FB;border:1px solid #CBD9EC;border-radius:5px;font-size:12px;color:var(--navy)}
 .rankmsg b{font-family:'Archivo';font-weight:800}
 
-/* 2. performance */
-.pf{display:grid;grid-template-columns:104px 1fr 64px;gap:10px;align-items:center;margin-bottom:12px}
-.pf-track{height:14px;background:#EEF1F6;border-radius:7px;position:relative}
-.pf-fill{height:100%;border-radius:7px;background:var(--blue)}
-.pf.low .pf-fill{background:var(--bad)}
-.pf-thr{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.45}
-.pf-val{font-family:'Archivo';font-weight:800;font-size:15px;text-align:right;color:var(--navy)}
-.pf.low .pf-val{color:var(--bad)}
-.pf-val small{display:block;font-weight:500;font-size:10px;color:var(--grey)}
-.thr-note{font-size:11px;color:var(--grey);margin-top:4px}
+/* 2. ranking de equipos */
+.eq{display:grid;grid-template-columns:86px 1fr 46px;gap:8px;align-items:center;margin-bottom:6px;position:relative}
+.eq-name{font-family:'Archivo Narrow';font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.eq-chip{font-family:'Archivo Narrow';font-weight:600;font-size:9px;padding:1px 5px;border-radius:8px;background:var(--light);color:var(--navy)}
+.eq-track{height:13px;background:#EEF1F6;border-radius:7px;position:relative;cursor:default}
+.eq-fill{height:100%;border-radius:7px;background:var(--blue)}
+.eq.top .eq-fill{background:var(--ok)}
+.eq.low .eq-fill{background:var(--bad)}
+.eq-thr{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.4}
+.eq-val{font-family:'Archivo';font-weight:800;font-size:13.5px;text-align:right;color:var(--navy)}
+.eq.low .eq-val{color:var(--bad)}
+.eq .tipE{display:none;position:absolute;left:96px;bottom:20px;background:var(--ink);color:#fff;font-size:10.5px;padding:6px 10px;border-radius:4px;white-space:nowrap;z-index:6;font-family:Arial}
+.eq:hover .tipE{display:block}
+.thr-note{font-size:11px;color:var(--grey);margin-top:6px}
 
 /* 1b. TCO apilado */
 .tbar.stk{display:flex;overflow:visible;background:transparent}
@@ -152,7 +156,7 @@ footer b{color:var(--ink)}
     <div>
       <div class="eyebrow">YPF Supply Chain · Well Construction</div>
       <h1>Dashboard de indicadores <span>— Rigs</span></h1>
-      <div class="hd-sub">Cinco indicadores, cada uno responde una pregunta de asignación: cuánto cuesta (normalizado), cómo rinde, cuánto tiene, cuándo puedo moverlo y cuántas alternativas tengo.</div>
+      <div class="hd-sub">Cinco indicadores, cada uno responde una pregunta de asignación: cuánto cuesta (normalizado), qué equipo rinde, cuánto tiene, cuándo puedo moverlo y cuántas alternativas tengo.</div>
     </div>
     <div class="mock">Mockup · datos ficticios</div>
   </div>
@@ -175,12 +179,12 @@ footer b{color:var(--ink)}
       <div class="rankmsg" id="rankmsg"></div>
     </section>
 
-    <!-- 2. PERFORMANCE -->
-    <section class="card" aria-label="Performance de proveedores">
-      <div class="c-head"><div class="c-title">2 · Performance</div><div class="c-q">¿El barato rinde?</div></div>
-      <div class="c-note">Score operativo (VPE y cumplimiento). La línea marca el <b>umbral 80</b>: debajo, el proveedor queda fuera de la asignación firme.</div>
-      <div id="perf"></div>
-      <div class="thr-note">│ umbral mínimo de performance = 80</div>
+    <!-- 2. RANKING DE EQUIPOS -->
+    <section class="card" aria-label="Ranking de equipos">
+      <div class="c-head"><div class="c-title">2 · Ranking de equipos</div><div class="c-q">¿Qué equipo rinde — y cuál devuelvo?</div></div>
+      <div class="c-note">Score ponderado por equipo: <b>VPE 40% · NPT 25% · DTM 20% · SKD 15%</b>. Pasá el mouse para ver el detalle. Score 0–100 contra bandas benchmark del mercado. Bajo el umbral 60 = candidato a devolución en el vencimiento.</div>
+      <div id="rkeq"></div>
+      <div class="thr-note">│ umbral mínimo = 60 · el ranking es por equipo porque el contrato se renueva equipo por equipo</div>
     </section>
 
     <!-- 3. MARKET SHARE (FRENTES) -->
@@ -250,7 +254,7 @@ footer b{color:var(--ink)}
 </main>
 
 <footer>
-  <b>Mockup conceptual</b> — proveedores y valores ficticios calibrados con la estructura del Playbook de Category Management. Cinco indicadores: TCO normalizado (con medida seleccionable), performance vs. umbral, frentes asignados, vencimientos en monto y plazo, y concentración contratados/mercado.
+  <b>Mockup conceptual</b> — proveedores y valores ficticios calibrados con la estructura del Playbook de Category Management. Cinco indicadores: TCO normalizado (con medida seleccionable), ranking de equipos ponderado (VPE·NPT·DTM·SKD), frentes asignados, vencimientos en monto y plazo, y concentración contratados/mercado.
 </footer>
 
 <script>
@@ -317,13 +321,49 @@ document.querySelectorAll(".norm button").forEach(b=>{
 });
 renderTCO("pozo");
 
-// ---------- 2. performance ----------
-const pfDiv=document.getElementById("perf");
-[...PROV].sort((a,b)=>b.perf-a.perf).forEach(p=>{
-  pfDiv.innerHTML+=`<div class="pf${p.perf<80?" low":""}">
-    <div class="tname">${p.id}<small>VPE ${p.vpe} m/día</small></div>
-    <div class="pf-track"><div class="pf-fill" style="width:${p.perf}%"></div><div class="pf-thr" style="left:80%"></div></div>
-    <div class="pf-val">${p.perf}<small>score</small></div></div>`;
+// ---------- 2. ranking de equipos (score ponderado) ----------
+// métricas crudas por equipo: VPE (m/día, +), NPT (%, -), DTM (días, -), SKD (horas, -)
+const EQ=[
+  {id:"A-166", pv:"A", vpe:372, npt:4.2,  dtm:4.2, skd:3.0},
+  {id:"A-167", pv:"A", vpe:365, npt:5.0,  dtm:4.5, skd:3.2},
+  {id:"A-168", pv:"A", vpe:360, npt:5.6,  dtm:4.6, skd:3.5},
+  {id:"A-169", pv:"A", vpe:358, npt:6.1,  dtm:4.8, skd:3.6},
+  {id:"B-990", pv:"B", vpe:360, npt:5.4,  dtm:4.6, skd:3.3},
+  {id:"B-F03", pv:"B", vpe:355, npt:6.0,  dtm:4.9, skd:3.5},
+  {id:"B-F07", pv:"B", vpe:352, npt:6.6,  dtm:5.0, skd:3.7},
+  {id:"B-1211",pv:"B", vpe:348, npt:7.2,  dtm:5.2, skd:3.9},
+  {id:"B-F35", pv:"B", vpe:345, npt:7.8,  dtm:5.4, skd:4.0},
+  {id:"C-T430",pv:"C", vpe:318, npt:10.5, dtm:6.0, skd:5.0},
+  {id:"C-T412",pv:"C", vpe:302, npt:12.0, dtm:6.5, skd:5.5},
+  {id:"D-219", pv:"D", vpe:365, npt:5.2,  dtm:4.6, skd:3.4},
+  {id:"D-229", pv:"D", vpe:358, npt:6.4,  dtm:5.0, skd:3.8},
+  {id:"D-213", pv:"D", vpe:352, npt:6.9,  dtm:5.1, skd:4.0},
+  {id:"D-224", pv:"D", vpe:350, npt:7.0,  dtm:5.2, skd:4.2},
+];
+const W={vpe:.40, npt:.25, dtm:.20, skd:.15};
+// normalizar 0–100 contra bandas benchmark del mercado (no contra la propia flota):
+// VPE 280–380 m/d (+) · NPT 3–13% (–) · DTM 3,8–7 días (–) · SKD 2,8–6 h (–)
+const BAND={vpe:[280,380,false], npt:[3,13,true], dtm:[3.8,7,true], skd:[2.8,6,true]};
+function norm(arr,key){
+  const [mn,mx,inv]=BAND[key];
+  arr.forEach(e=>{
+    let x=(e[key]-mn)/(mx-mn); x=Math.max(0,Math.min(1,x));
+    e["n_"+key]=Math.round((inv?1-x:x)*100);
+  });
+}
+norm(EQ,"vpe"); norm(EQ,"npt"); norm(EQ,"dtm"); norm(EQ,"skd");
+EQ.forEach(e=>{
+  e.score=Math.round(e.n_vpe*W.vpe + e.n_npt*W.npt + e.n_dtm*W.dtm + e.n_skd*W.skd);
+});
+const UMBRAL=60;
+const rkDiv=document.getElementById("rkeq");
+[...EQ].sort((a,b)=>b.score-a.score).forEach((e,i)=>{
+  const cls=i===0?" top":e.score<UMBRAL?" low":"";
+  rkDiv.innerHTML+=`<div class="eq${cls}">
+    <div class="eq-name">${e.id}<span class="eq-chip">${e.pv}</span></div>
+    <div class="eq-track"><div class="eq-fill" style="width:${e.score}%"></div><div class="eq-thr" style="left:${UMBRAL}%"></div>
+      <span class="tipE">VPE ${e.vpe} m/d · NPT ${e.npt}% · DTM ${e.dtm} d · SKD ${e.skd} h</span></div>
+    <div class="eq-val">${e.score}</div></div>`;
 });
 
 // ---------- 3. market share — torta (frentes asignados) ----------
