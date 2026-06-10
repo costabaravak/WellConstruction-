@@ -3,281 +3,361 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frameworks aplicados — Well Construction</title>
+<title>Dashboard de Indicadores — Rigs | Mockup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0b1116; --panel:#111a21; --panel2:#15212a; --line:#22323d;
-    --ink:#e9eff1; --soft:#93a4ad; --faint:#637680;
-    --oil:#e8913a;      /* ámbar perforación */
-    --teal:#46b4c4;
-    --green:#46b07c; --yellow:#d6a83a; --red:#d9685f; --grey:#6b7d86;
-    --pyr:#b58be0;
-    --sh:0 18px 40px -28px #000;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg); color:var(--ink); font-family:'Hanken Grotesk',sans-serif; line-height:1.55;
-    background-image:radial-gradient(900px 480px at 92% -8%, #1a3a4055, transparent), radial-gradient(700px 400px at -5% 100%, #2a1f1244, transparent); background-attachment:fixed}
-  .wrap{max-width:980px; margin:0 auto; padding:0 24px}
-  ::selection{background:var(--oil); color:#0b1116}
+:root{
+  --navy:#1F3864; --blue:#2E75B6; --steel:#5B84B1; --light:#D9E2F3; --paper:#F5F7FA;
+  --ink:#22293A; --grey:#6B7486; --line:#D7DDE7;
+  --ok:#2E7D32; --warn:#B8860B; --bad:#C0392B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.45;font-variant-numeric:tabular-nums}
 
-  header{padding:66px 0 34px; border-bottom:1px solid var(--line)}
-  .eye{font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:2px; text-transform:uppercase; color:var(--oil); margin-bottom:18px}
-  h1{font-family:'Schibsted Grotesk',sans-serif; font-weight:800; font-size:clamp(33px,5.3vw,58px); line-height:1.02; letter-spacing:-1.2px; margin-bottom:18px}
-  h1 em{font-style:normal; color:var(--oil)}
-  .lede{max-width:650px; color:var(--soft); font-size:16.5px}
-  .lede b{color:var(--ink)}
+/* header */
+header{background:var(--navy);color:#fff;padding:20px 32px 18px}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;max-width:1220px;margin:0 auto}
+.eyebrow{font-family:'Archivo Narrow';font-weight:600;letter-spacing:.18em;font-size:11px;color:#9FB6DA;text-transform:uppercase}
+h1{font-family:'Archivo';font-weight:800;font-size:25px;letter-spacing:-.01em;margin-top:3px}
+h1 span{color:#8FB8EA;font-weight:600}
+.hd-sub{color:#C5D3EA;font-size:12.5px;margin-top:5px;max-width:720px}
+.mock{font-family:'Archivo Narrow';font-weight:700;font-size:11px;letter-spacing:.12em;border:1px solid #8FB8EA;color:#BFD6F2;padding:4px 10px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
 
-  section{padding:48px 0; border-bottom:1px solid var(--line)}
-  .lab{display:flex; align-items:center; gap:11px; margin-bottom:8px}
-  .ld{width:10px; height:10px; border-radius:3px; flex-shrink:0}
-  .lk{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faint)}
-  h2{font-family:'Schibsted Grotesk',sans-serif; font-weight:700; font-size:clamp(22px,3.4vw,31px); letter-spacing:-0.5px; margin-bottom:8px}
-  .sub{color:var(--soft); max-width:680px; margin-bottom:26px; font-size:15px}
-  .sub b{color:var(--ink)}
+main{max-width:1220px;margin:0 auto;padding:24px 28px 50px}
+.grid{display:grid;grid-template-columns:3fr 2fr;gap:18px}
+.full{grid-column:1/-1}
 
-  /* reframe trio */
-  .trio{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-  .tc{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:20px; box-shadow:var(--sh)}
-  .tc .h{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px}
-  .tc.sy .h{color:var(--red)} .tc.rc .h{color:var(--yellow)} .tc.st .h{color:var(--green)}
-  .tc p{font-size:14px; color:var(--ink)} .tc p b{color:var(--oil)}
-  @media(max-width:640px){.trio{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px 20px 20px}
+.c-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:3px}
+.c-title{font-family:'Archivo';font-weight:700;font-size:16px;color:var(--navy)}
+.c-q{font-size:11.5px;color:var(--grey);font-style:italic}
+.c-note{font-size:11.5px;color:var(--grey);margin-bottom:14px}
+.c-note b{color:var(--ink)}
 
-  /* gap table */
-  .gap{display:grid; grid-template-columns:1fr auto 1fr; align-items:stretch}
-  .gc{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px 20px; box-shadow:var(--sh)}
-  .gc h4{font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px}
-  .gc.n h4{color:var(--red)} .gc.g h4{color:var(--green)}
-  .gc ul{list-style:none} .gc li{font-size:13.5px; padding:6px 0 6px 17px; position:relative; border-bottom:1px dashed var(--line)}
-  .gc li:last-child{border-bottom:none}
-  .gc.n li::before{content:"–"; position:absolute; left:0; color:var(--red); font-weight:700}
-  .gc.g li::before{content:"+"; position:absolute; left:0; color:var(--green); font-weight:700}
-  .ga{display:flex; align-items:center; justify-content:center; width:50px; color:var(--oil); font-family:'Spline Sans Mono',monospace; font-size:12px}
-  @media(max-width:620px){.gap{grid-template-columns:1fr} .ga{width:100%;height:34px;transform:rotate(90deg)}}
+/* 1. TCO normalizado */
+.norm{display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:14px}
+.norm button{border:0;background:#fff;color:var(--grey);font-family:'Archivo Narrow';font-weight:600;font-size:12px;padding:6px 13px;cursor:pointer;border-right:1px solid var(--line)}
+.norm button:last-child{border-right:0}
+.norm button.on{background:var(--navy);color:#fff}
+.norm button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.tr{display:grid;grid-template-columns:104px 1fr 110px;gap:10px;align-items:center;margin-bottom:10px}
+.tname{font-family:'Archivo Narrow';font-weight:700;font-size:13.5px}
+.tname small{display:block;font-weight:500;font-size:10.5px;color:var(--grey)}
+.tbar{height:24px;background:#EEF1F6;border-radius:3px;position:relative;overflow:visible}
+.tfill{height:100%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px;transition:width .35s;position:relative}
+.tr.best .tfill{background:linear-gradient(90deg,#3E8E54,var(--ok))}
+.tval{font-family:'Archivo';font-weight:800;font-size:15px;color:var(--navy);text-align:right}
+.tval small{display:block;font-weight:500;font-size:10px;color:var(--grey)}
+.avg{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--bad);z-index:2}
+.avg::after{content:"prom.";position:absolute;top:-14px;left:-12px;font-family:'Archivo Narrow';font-weight:600;font-size:9.5px;color:var(--bad)}
+.rankmsg{margin-top:10px;padding:9px 12px;background:#F2F6FB;border:1px solid #CBD9EC;border-radius:5px;font-size:12px;color:var(--navy)}
+.rankmsg b{font-family:'Archivo';font-weight:800}
 
-  /* logic tree WC */
-  .lt{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:22px; box-shadow:var(--sh)}
-  .lt .root{font-family:'Spline Sans Mono',monospace; font-size:12px; color:var(--teal); font-weight:600; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line)}
-  .cats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px}
-  .cat{background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-size:12.5px; font-weight:600}
-  .streams{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
-  .stream{border-top:3px solid var(--oil); background:var(--panel2); border-radius:0 0 9px 9px; padding:12px 13px}
-  .stream .n{font-family:'Spline Sans Mono',monospace; font-size:10px; color:var(--oil); margin-bottom:5px}
-  .stream h5{font-size:13.5px; font-weight:700; margin-bottom:4px}
-  .stream p{font-size:11.5px; color:var(--soft)}
-  @media(max-width:680px){.cats{grid-template-columns:repeat(2,1fr)} .streams{grid-template-columns:repeat(2,1fr)}}
+/* 2. performance */
+.pf{display:grid;grid-template-columns:104px 1fr 64px;gap:10px;align-items:center;margin-bottom:12px}
+.pf-track{height:14px;background:#EEF1F6;border-radius:7px;position:relative}
+.pf-fill{height:100%;border-radius:7px;background:var(--blue)}
+.pf.low .pf-fill{background:var(--bad)}
+.pf-thr{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.45}
+.pf-val{font-family:'Archivo';font-weight:800;font-size:15px;text-align:right;color:var(--navy)}
+.pf.low .pf-val{color:var(--bad)}
+.pf-val small{display:block;font-weight:500;font-size:10px;color:var(--grey)}
+.thr-note{font-size:11px;color:var(--grey);margin-top:4px}
 
-  /* yes/no tree */
-  .yn{display:flex; flex-direction:column; gap:0}
-  .ynrow{display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:14px;
-    background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:15px 18px; margin-bottom:10px; box-shadow:var(--sh)}
-  .ynq{font-size:14px; font-weight:600}
-  .ynno{font-family:'Spline Sans Mono',monospace; font-size:11.5px; display:flex; align-items:center; gap:8px}
-  .bucket{display:inline-flex; align-items:center; gap:7px; font-weight:700; font-size:12.5px; padding:4px 10px; border-radius:20px}
-  .dotc{width:10px;height:10px;border-radius:50%}
-  .b-red{background:#d9685f1f; color:var(--red)} .b-yellow{background:#d6a83a1f; color:var(--yellow)}
-  .b-grey{background:#6b7d861f; color:var(--grey)} .b-green{background:#46b07c1f; color:var(--green)}
-  .ynfin{text-align:center; font-family:'Spline Sans Mono',monospace; font-size:11px; color:var(--faint); margin-top:2px}
+/* 3. frentes */
+.fr{display:grid;grid-template-columns:104px 1fr 96px;gap:10px;align-items:center;margin-bottom:11px}
+.fr-track{height:22px;background:#EEF1F6;border-radius:3px;display:flex;overflow:hidden}
+.fr-fill{height:100%;background:var(--steel)}
+.fr-val{font-family:'Archivo';font-weight:800;font-size:15px;color:var(--navy);text-align:right}
+.fr-val small{font-weight:500;font-size:11px;color:var(--grey)}
+.fr-tot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:6px;padding-top:8px;font-size:12px;color:var(--grey)}
+.fr-tot b{font-family:'Archivo';font-weight:800;color:var(--navy)}
 
-  /* pyramid */
-  .pyr{display:flex; flex-direction:column; align-items:center; gap:10px}
-  .ptop{background:linear-gradient(135deg,#1c2b34,#19232b); border:1px solid var(--pyr); border-radius:12px; padding:18px 26px; text-align:center; max-width:560px; box-shadow:var(--sh)}
-  .ptop .k{font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--pyr); margin-bottom:7px}
-  .ptop .c{font-family:'Schibsted Grotesk',sans-serif; font-weight:700; font-size:17px}
-  .pbase{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:100%}
-  .pb{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:14px 15px}
-  .pb .n{font-family:'Spline Sans Mono',monospace; font-size:10px; color:var(--pyr); margin-bottom:5px}
-  .pb p{font-size:12.5px; color:var(--ink)}
-  @media(max-width:600px){.pbase{grid-template-columns:1fr}}
+/* 4. vencimientos */
+.tl-head{display:grid;grid-template-columns:150px 1fr;gap:10px;font-family:'Archivo Narrow';font-weight:600;font-size:10.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.tl-q{display:grid;grid-template-columns:repeat(8,1fr)}
+.tl-q span{border-left:1px solid var(--line);padding-left:5px}
+.tl-row{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin-bottom:10px}
+.tl-name{font-family:'Archivo Narrow';font-weight:700;font-size:13px}
+.tl-name small{display:block;font-weight:500;font-size:10.5px;color:var(--grey)}
+.tl-lane{position:relative;height:30px;background:repeating-linear-gradient(90deg,#F4F6FA 0,#F4F6FA calc(12.5% - 1px),var(--line) calc(12.5% - 1px),var(--line) 12.5%);border-radius:3px}
+.tl-bar{position:absolute;top:4px;bottom:4px;border-radius:3px;display:flex;align-items:center;padding:0 9px;font-family:'Archivo';font-weight:800;font-size:12px;color:#fff;white-space:nowrap;min-width:74px}
+.tl-bar small{font-weight:600;font-size:10px;opacity:.85;margin-left:6px}
+.tl-bar.red{background:var(--bad)}
+.tl-bar.amb{background:var(--warn)}
+.tl-bar.grn{background:#3E7D4E}
+.tl-leg{display:flex;gap:16px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--grey);flex-wrap:wrap}
+.dotl{display:inline-flex;align-items:center;gap:6px}
+.dotl i{width:10px;height:10px;border-radius:2px;display:inline-block}
 
-  /* design plan table */
-  .dp{width:100%; border-collapse:collapse; background:var(--panel); border-radius:13px; overflow:hidden; box-shadow:var(--sh); font-size:13px}
-  .dp th{background:var(--panel2); text-align:left; padding:12px 14px; font-family:'Spline Sans Mono',monospace; font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--teal); border-bottom:1px solid var(--line)}
-  .dp td{padding:12px 14px; border-bottom:1px solid var(--line); color:var(--soft); vertical-align:top}
-  .dp td:first-child{color:var(--ink); font-weight:600}
-  .dp tr:last-child td{border-bottom:none}
+/* 5. concentración */
+.conc2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.conc-half{border:1px solid var(--line);border-radius:6px;padding:14px 16px;background:#FBFCFE}
+.half-title{font-family:'Archivo Narrow';font-weight:700;font-size:12.5px;color:var(--navy);letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.conc{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.conc-num{text-align:center;padding:0 8px}
+.conc-num .big{font-family:'Archivo';font-weight:800;font-size:46px;color:var(--navy);line-height:1}
+.conc-num .big span{font-size:24px;color:var(--grey);font-weight:600}
+.conc-num .lab{font-family:'Archivo Narrow';font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:4px}
+.dots{display:grid;grid-template-columns:repeat(8,28px);gap:8px;margin-bottom:10px}
+.dt{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:#fff;position:relative}
+.dt.us{background:var(--navy);border-color:var(--navy)}
+.dt.loc{border-color:var(--steel)}
+.dt small{position:absolute;top:32px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--grey);white-space:nowrap}
+.conc-read{font-size:12.5px;color:var(--ink);margin-top:16px}
+.conc-read b{color:var(--navy)}
+.conc-alt{margin-top:10px;padding:9px 12px;background:#FBF6EA;border:1px solid #E7D9B0;border-radius:5px;font-size:11.5px;color:#7A6320}
 
-  /* principles guardrails */
-  .guard{display:grid; grid-template-columns:repeat(2,1fr); gap:13px}
-  .gr{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:11px; padding:16px 18px; box-shadow:var(--sh)}
-  .gr .t{font-weight:700; font-size:15px; margin-bottom:5px}
-  .gr p{font-size:13px; color:var(--soft)}
-  .gr p b{color:var(--ink)}
-  @media(max-width:640px){.guard{grid-template-columns:1fr}}
+.hhi-top{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+.cr3{font-size:12px;color:var(--grey);display:flex;flex-direction:column;gap:2px}
+.cr3 b{font-family:'Archivo';font-weight:800;font-size:22px;color:var(--navy)}
+.hhi-scale{position:relative;display:flex;height:46px;border-radius:5px;overflow:visible;margin-bottom:14px}
+.hz{display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Archivo Narrow';font-weight:600;font-size:10px;line-height:1.25;color:#5A6372}
+.hz:first-child{border-radius:5px 0 0 5px}
+.hz:last-child{border-radius:0 5px 5px 0}
+.hhi-needle{position:absolute;top:-7px;bottom:-7px;width:3px;background:var(--navy);border-radius:2px;z-index:2}
+.hhi-needle::after{content:"▼";position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--navy)}
+.share{margin-bottom:10px}
+.sh-row{display:grid;grid-template-columns:96px 1fr 56px;gap:8px;align-items:center;margin-bottom:5px}
+.sh-name{font-family:'Archivo Narrow';font-weight:600;font-size:11.5px;color:var(--ink)}
+.sh-track{height:12px;background:#EEF1F6;border-radius:3px;overflow:hidden}
+.sh-fill{height:100%;background:var(--steel)}
+.sh-row.top3 .sh-fill{background:var(--navy)}
+.sh-val{font-family:'Archivo';font-weight:700;font-size:11.5px;color:var(--grey);text-align:right}
 
-  /* rhythm */
-  .rhythm{background:var(--oil); color:#0b1116; border-radius:15px; padding:28px; margin-top:6px}
-  .rhythm h3{font-family:'Schibsted Grotesk',sans-serif; font-weight:800; font-size:20px; margin-bottom:6px}
-  .rhythm p{font-size:14px; opacity:.85; margin-bottom:18px; max-width:600px}
-  .rsteps{display:flex; gap:0; flex-wrap:wrap}
-  .rs{flex:1; min-width:120px; background:#0b111622; border:1px solid #0b111630; border-radius:10px; padding:13px 14px}
-  .rs .when{font-family:'Spline Sans Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:5px; font-weight:600}
-  .rs h5{font-size:13.5px; font-weight:800; margin-bottom:3px}
-  .rs p{font-size:11.5px; opacity:.8; margin:0}
-  .rarr{display:flex;align-items:center;justify-content:center;width:24px;color:#0b1116;font-weight:800}
-  @media(max-width:680px){.rarr{width:100%;height:20px;transform:rotate(90deg)}}
+footer{max-width:1220px;margin:0 auto;padding:0 28px 36px;font-size:11px;color:var(--grey)}
+footer b{color:var(--ink)}
 
-  footer{padding:38px 0 70px; color:var(--faint); font-size:11px; font-family:'Spline Sans Mono',monospace; text-align:center; letter-spacing:.5px}
-
-  .reveal{opacity:0; transform:translateY(18px); transition:.6s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1; transform:none}
+@media(max-width:920px){.grid{grid-template-columns:1fr}.conc{grid-template-columns:1fr}.conc2{grid-template-columns:1fr}.dots{grid-template-columns:repeat(8,24px)}.dt{width:24px;height:24px}.hhi-top{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="eye reveal">Frameworks de Problem Solving · aplicados</div>
-    <h1 class="reveal">El método, puesto a trabajar en tu rol de <em>Well Construction</em></h1>
-    <p class="lede reveal">Cada framework de la referencia, aplicado a tus tres frentes: <b>Informes de Mercado, TCO + Share Dinámico y Salud de categorías</b>. No es teoría: es cómo se usa cada herramienta en tu mesa.</p>
-  </header>
-
-  <!-- 1. REFRAME -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Principio · Replantear · Síntoma → causa raíz → estrategia</span></div>
-    <h2>Primero, el problema correcto</h2>
-    <p class="sub">Antes de construir nada, separá lo que se ve de lo que importa. El tablero es una táctica, no el objetivo.</p>
-    <div class="trio">
-      <div class="tc sy"><div class="h">Síntoma</div><p>Cada categoría reporta distinto y no hay TCO ni Share en el tablero.</p></div>
-      <div class="tc rc"><div class="h">Causa raíz</div><p>La actividad se asigna por <b>precio y relación</b>, sin costo total ni criterio común. No se puede comparar ni defender.</p></div>
-      <div class="tc st"><div class="h">Estrategia</div><p>Decidir la asignación por <b>valor total</b>, trazable. Tablero, TCO y Power BI son tácticas a su servicio.</p></div>
+<header>
+  <div class="hd">
+    <div>
+      <div class="eyebrow">YPF Supply Chain · Well Construction</div>
+      <h1>Dashboard de indicadores <span>— Rigs</span></h1>
+      <div class="hd-sub">Cinco indicadores, cada uno responde una pregunta de asignación: cuánto cuesta (normalizado), cómo rinde, cuánto tiene, cuándo puedo moverlo y cuántas alternativas tengo.</div>
     </div>
-  </section>
+    <div class="mock">Mockup · datos ficticios</div>
+  </div>
+</header>
 
-  <!-- 2. PROCESS 02 — GOAL GAP applied -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Proceso 02 · El rol como cierre de brecha</span></div>
-    <h2>Tu rol es cerrar una brecha</h2>
-    <p class="sub">No hay algo "roto" que arreglar: hay una <b>meta</b> a alcanzar para sep./oct. Por eso aplica el proceso de meta-brecha.</p>
-    <div class="gap">
-      <div class="gc n"><h4>Situación actual</h4><ul>
-        <li>Criterios distintos por categoría</li>
-        <li>Datos sin dueño definido</li>
-        <li>Sin TCO ni Share publicados</li>
-        <li>Salud de categorías desconocida</li>
-        <li>Decide el precio</li>
-      </ul></div>
-      <div class="ga reveal">brecha →</div>
-      <div class="gc g"><h4>Meta (sep./oct.)</h4><ul>
-        <li>Formato y criterios unificados</li>
-        <li>Cada dato con dueño y fuente</li>
-        <li>TCO + Share en el tablero</li>
-        <li>Salud integrada como capa de confianza</li>
-        <li>Decide el valor total</li>
-      </ul></div>
-    </div>
-  </section>
+<main>
+  <div class="grid">
 
-  <!-- 3. LOGIC TREE applied -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Herramienta · Árbol lógico (MECE)</span></div>
-    <h2>La hipótesis, descompuesta sin huecos</h2>
-    <p class="sub">La hipótesis para cerrar la brecha —un sistema integrado de inteligencia— se parte en ramas MECE: las 9 categorías críticas, y dentro de cada una, los mismos 4 flujos de trabajo.</p>
-    <div class="lt">
-      <div class="root">SISTEMA DE INTELIGENCIA DE CATEGORÍAS · 9 categorías críticas</div>
-      <div class="cats">
-        <div class="cat">Perforación High Spec</div><div class="cat">Direccional</div><div class="cat">Cementación</div>
-        <div class="cat">Fluidos</div><div class="cat">Fractura</div><div class="cat">Wireline</div>
-        <div class="cat">Stack</div><div class="cat">Coiled Tubing</div><div class="cat">Cabezales</div>
+    <!-- 1. TCO NORMALIZADO -->
+    <section class="card" aria-label="TCO normalizado">
+      <div class="c-head"><div class="c-title">1 · TCO normalizado por proveedor</div><div class="c-q">¿Quién es realmente más barato?</div></div>
+      <div class="c-note">El ranking <b>depende de la medida de normalización</b> — probá cambiarla: el orden se reordena. Línea roja = promedio.</div>
+      <div class="norm" role="tablist" aria-label="Medida de normalización">
+        <button class="on" data-m="pozo">por pozo</button>
+        <button data-m="metro">por metro perforado</button>
+        <button data-m="dia">por día operativo</button>
       </div>
-      <div class="streams">
-        <div class="stream"><div class="n">RAMA 1</div><h5>Salud</h5><p>Dato, dueño, fuente, estado, semáforo.</p></div>
-        <div class="stream"><div class="n">RAMA 2</div><h5>TCO</h5><p>Costo total por unidad de actividad.</p></div>
-        <div class="stream"><div class="n">RAMA 3</div><h5>Share Dinámico</h5><p>Scoring → bandas de asignación.</p></div>
-        <div class="stream"><div class="n">RAMA 4</div><h5>Informe</h5><p>Mercado, share, precio, estrategia.</p></div>
+      <div id="tco"></div>
+      <div class="rankmsg" id="rankmsg"></div>
+    </section>
+
+    <!-- 2. PERFORMANCE -->
+    <section class="card" aria-label="Performance de proveedores">
+      <div class="c-head"><div class="c-title">2 · Performance</div><div class="c-q">¿El barato rinde?</div></div>
+      <div class="c-note">Score operativo (VPE y cumplimiento). La línea marca el <b>umbral 80</b>: debajo, el proveedor queda fuera de la asignación firme.</div>
+      <div id="perf"></div>
+      <div class="thr-note">│ umbral mínimo de performance = 80</div>
+    </section>
+
+    <!-- 3. FRENTES -->
+    <section class="card" aria-label="Frentes asignados">
+      <div class="c-head"><div class="c-title">3 · Frentes asignados</div><div class="c-q">¿Cómo repartí la torta hoy?</div></div>
+      <div class="c-note">Asignación vigente por proveedor. Es la <b>línea de base</b> contra la que se compara la asignación óptima por TCO.</div>
+      <div id="fr"></div>
+      <div class="fr-tot"><span>Total frentes activos</span><b>15</b></div>
+    </section>
+
+    <!-- 4. VENCIMIENTOS -->
+    <section class="card" aria-label="Vencimientos de contratos">
+      <div class="c-head"><div class="c-title">4 · Vencimientos de contratos</div><div class="c-q">¿Cuándo y cuánto puedo mover?</div></div>
+      <div class="c-note">Cada barra es un contrato: el <b>largo es el plazo</b> remanente y la etiqueta el <b>monto</b> comprometido. Color = urgencia de la ventana de negociación.</div>
+      <div class="tl-head"><span></span><div class="tl-q"><span>Q1·26</span><span>Q2</span><span>Q3</span><span>Q4</span><span>Q1·27</span><span>Q2</span><span>Q3</span><span>Q4</span></div></div>
+      <div id="tl"></div>
+      <div class="tl-leg">
+        <span class="dotl"><i style="background:var(--bad)"></i>&lt; 6 meses — negociar ya</span>
+        <span class="dotl"><i style="background:var(--warn)"></i>6–12 meses — preparar</span>
+        <span class="dotl"><i style="background:#3E7D4E"></i>&gt; 12 meses — monitorear</span>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 4. YES/NO TREE applied to Salud -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Herramienta · Árbol Sí/No</span></div>
-    <h2>El semáforo de Salud es un árbol Sí/No</h2>
-    <p class="sub">Tu relevamiento de Salud <b>es</b> esta herramienta: preguntas sí/no encadenadas que mandan cada categoría a un balde. Todas caen en uno, sin excepción.</p>
-    <div class="yn">
-      <div class="ynrow"><div class="ynq">¿La categoría está relevada?</div><div class="ynno">no →</div><span class="bucket b-grey"><span class="dotc" style="background:var(--grey)"></span>Gris</span></div>
-      <div class="ynrow"><div class="ynq">¿Tiene datos clave con dueño y fuente?</div><div class="ynno">no →</div><span class="bucket b-red"><span class="dotc" style="background:var(--red)"></span>Rojo</span></div>
-      <div class="ynrow"><div class="ynq">¿La performance es medible y vigente?</div><div class="ynno">parcial →</div><span class="bucket b-yellow"><span class="dotc" style="background:var(--yellow)"></span>Amarillo</span></div>
-      <div class="ynrow"><div class="ynq">¿TCO y Share publicados y actualizados?</div><div class="ynno">sí →</div><span class="bucket b-green"><span class="dotc" style="background:var(--green)"></span>Verde</span></div>
-    </div>
-    <div class="ynfin">Cada "no" o "parcial" deriva en una próxima acción con responsable y fecha.</div>
-  </section>
-
-  <!-- 5. HYPOTHESIS PYRAMID applied to Share recommendation -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--pyr)"></span><span class="lk">Herramienta · Pirámide de hipótesis</span></div>
-    <h2>Cómo se presenta una recomendación de Share</h2>
-    <p class="sub">Cuando llevás una decisión de asignación al foro, estructurala así: la conclusión arriba, los tres fundamentos como base. Es una estructura de <b>argumento</b>: si un fundamento cae, hay que revisar la conclusión.</p>
-    <div class="pyr">
-      <div class="ptop"><div class="k">Conclusión</div><div class="c">Reasignar X% de la actividad de Fractura al proveedor B en el próximo ciclo</div></div>
-      <div class="pbase">
-        <div class="pb"><div class="n">FUNDAMENTO 1 · TCO</div><p>Menor costo total por etapa, no solo menor precio.</p></div>
-        <div class="pb"><div class="n">FUNDAMENTO 2 · Performance</div><p>Menor NPT y mejor cumplimiento operativo.</p></div>
-        <div class="pb"><div class="n">FUNDAMENTO 3 · Riesgo</div><p>Reduce la concentración por debajo del tope de dependencia.</p></div>
+    <!-- 5. CONCENTRACION -->
+    <section class="card full" aria-label="Concentración de proveedores vs mercado">
+      <div class="c-head"><div class="c-title">5 · Concentración: alternativas y estructura del mercado</div><div class="c-q">¿Tengo alternativas — y qué tan repartida está la oferta entre ellas?</div></div>
+      <div class="c-note">Dos lecturas complementarias: <b>cuántas alternativas reales tengo</b> (contratados / mercado) y <b>qué tan monopólica u oligopólica es la oferta</b> (HHI sobre el share de equipos). Pueden existir 16 proveedores y aun así 3 dominar el 70%.</div>
+      <div class="conc2">
+        <div class="conc-half">
+          <div class="half-title">A · Profundidad: ¿con quién más puedo contratar?</div>
+          <div class="conc">
+            <div class="conc-num">
+              <div class="big">4<span> / 16</span></div>
+              <div class="lab">contratados / mercado</div>
+            </div>
+            <div>
+              <div class="dots" id="dots"></div>
+              <div class="conc-read">Mercado <b>profundo</b>: 4 contratados sobre 7 locales y 9 internacionales con equipos super-spec libres. <b>Hay con quién amenazar la migración de volumen.</b></div>
+            </div>
+          </div>
+          <div class="conc-alt">Contraejemplo que este indicador detecta: <b>3 / 3</b> — todo el mercado ya contratado — estaríamos cautivos y la estrategia pasa a desarrollar proveedores nuevos.</div>
+        </div>
+        <div class="conc-half">
+          <div class="half-title">B · Estructura: ¿monopolio, oligopolio o mercado competitivo?</div>
+          <div class="hhi-top">
+            <div class="conc-num">
+              <div class="big" id="hhi-val">—</div>
+              <div class="lab">HHI de la oferta</div>
+            </div>
+            <div class="cr3"><b id="cr3-val">—</b><span>CR3 — share de oferta de los 3 mayores</span></div>
+          </div>
+          <div class="hhi-scale">
+            <div class="hz" style="flex:15;background:#DCEBDD"><span>Competitivo<br>&lt; 1.500</span></div>
+            <div class="hz" style="flex:10;background:#F4E8C8"><span>Oligopolio moderado<br>1.500 – 2.500</span></div>
+            <div class="hz" style="flex:15;background:#F4D6CF"><span>Alta concentración<br>&gt; 2.500 → monopólico</span></div>
+            <div class="hhi-needle" id="hhi-needle"></div>
+          </div>
+          <div class="share" id="share"></div>
+          <div class="conc-read" id="hhi-read"></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 6. DESIGN PLAN applied to TCO -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Herramienta · Plan de diseño</span></div>
-    <h2>Antes de perseguir datos para el TCO</h2>
-    <p class="sub">No salgas a juntar planillas. Definí primero qué pregunta responde cada dato. Ejemplo para una categoría piloto:</p>
-    <table class="dp">
-      <tr><th>Hipótesis a probar</th><th>Dato / análisis necesario</th><th>Fuente</th></tr>
-      <tr><td>El precio bajo de un proveedor esconde mayor costo total</td><td>NPT y retrabajos costeados por proveedor</td><td>Sistema operativo de pozo</td></tr>
-      <tr><td>Hay sobre-concentración en un proveedor</td><td>Share actual de actividad por proveedor</td><td>OC / asignación</td></tr>
-      <tr><td>El TCO unitario es comparable entre proveedores</td><td>Costo total ÷ unidad de actividad (etapa, metro, día)</td><td>Facturación + actividad</td></tr>
-    </table>
-  </section>
+  </div>
+</main>
 
-  <!-- 7. PRINCIPLES as guardrails -->
-  <section class="reveal">
-    <div class="lab"><span class="ld" style="background:var(--teal)"></span><span class="lk">Principios · Guardrails de decisión</span></div>
-    <h2>Las reglas que protegen el modelo</h2>
-    <p class="sub">Aplicadas a las decisiones que vas a tomar todas las semanas.</p>
-    <div class="guard">
-      <div class="gr"><div class="t">Estrategia &gt; táctica</div><p>Si una categoría pide "más tablero", preguntá <b>qué decisión</b> no se puede tomar hoy. El tablero existe para eso.</p></div>
-      <div class="gr"><div class="t">Síntoma ≠ causa raíz</div><p>"El proveedor es caro" es síntoma. La causa puede ser un alcance contractual mal definido o NPT no costeado.</p></div>
-      <div class="gr"><div class="t">Inputs &gt; outputs</div><p>Una buena decisión de Share puede tener mal resultado por un factor externo. Juzgá la <b>calidad de la decisión</b>, no solo el resultado.</p></div>
-      <div class="gr"><div class="t">1er orden vs. 2do orden</div><p>El proveedor más barato hoy (1er orden positivo) puede ser el de peor TCO mañana (2do orden negativo). El TCO captura justo eso.</p></div>
-      <div class="gr"><div class="t">Tan simple como sea posible</div><p>Usá el mínimo de variables que explique la decisión. Un modelo simple que se usa le gana a uno complejo abandonado.</p></div>
-      <div class="gr"><div class="t">El modelo orienta, no decide</div><p>El score es insumo para la conversación técnica/comercial. Documentá cuándo te apartás de él y por qué.</p></div>
-    </div>
-  </section>
+<footer>
+  <b>Mockup conceptual</b> — proveedores y valores ficticios calibrados con la estructura del Playbook de Category Management. Cinco indicadores: TCO normalizado (con medida seleccionable), performance vs. umbral, frentes asignados, vencimientos en monto y plazo, y concentración contratados/mercado.
+</footer>
 
-  <!-- 8. OPERATING RHYTHM -->
-  <section class="reveal" style="border-bottom:none">
-    <div class="lab"><span class="ld" style="background:var(--oil)"></span><span class="lk">Puesta en marcha · Ritmo operativo</span></div>
-    <h2>El método como rutina mensual</h2>
-    <p class="sub">Los dos procesos se vuelven un ciclo que se repite cada mes en la primera semana.</p>
-    <div class="rhythm">
-      <h3>El ciclo de cada categoría</h3>
-      <p>Encuadrar la decisión pendiente, relevar la Salud (árbol Sí/No), modelar/actualizar el TCO, calcular el Share y llevar la recomendación al foro como pirámide.</p>
-      <div class="rsteps">
-        <div class="rs"><div class="when">Encuadrar</div><h5>¿Qué decido?</h5><p>La decisión de asignación pendiente.</p></div>
-        <div class="rarr">→</div>
-        <div class="rs"><div class="when">Salud</div><h5>¿Es decidible?</h5><p>Semáforo Sí/No por categoría.</p></div>
-        <div class="rarr">→</div>
-        <div class="rs"><div class="when">TCO + Share</div><h5>Modelar</h5><p>Costo total y scoring.</p></div>
-        <div class="rarr">→</div>
-        <div class="rs"><div class="when">Foro</div><h5>Recomendar</h5><p>Pirámide al decisor.</p></div>
-        <div class="rarr">→</div>
-        <div class="rs"><div class="when">Aprender</div><h5>Ajustar</h5><p>Validar resultado, refinar.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="reveal">FRAMEWORKS APLICADOS · WELL CONSTRUCTION · SUPPLY CHAIN</footer>
-
-</div>
 <script>
-  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// ---------- datos ficticios ----------
+// metros por pozo ~5.500; días = 5500 / VPE
+const PROV=[
+  {id:"Proveedor A",     sub:"local · 4 frentes",        pozo:1058, vpe:365, perf:92, fr:4},
+  {id:"Proveedor B",     sub:"internacional · 5 frentes",pozo:1129, vpe:352, perf:88, fr:5},
+  {id:"Proveedor C", sub:"spot · 2 frentes",         pozo:1257, vpe:310, perf:76, fr:2},
+  {id:"Proveedor D",   sub:"internacional · 4 frentes",pozo:1292, vpe:358, perf:90, fr:4},
+];
+const M=5500;
+PROV.forEach(p=>{
+  p.metro = p.pozo*1000/M;            // USD por metro
+  p.dia   = p.pozo/(M/p.vpe);         // KUSD por día operativo
+});
+const MEAS={
+  pozo:{get:p=>p.pozo, unit:"KUSD/pozo", fmt:v=>Math.round(v).toLocaleString("es-AR")},
+  metro:{get:p=>p.metro,unit:"USD/metro", fmt:v=>Math.round(v).toLocaleString("es-AR")},
+  dia:{get:p=>p.dia,  unit:"KUSD/día op.", fmt:v=>v.toFixed(1)}
+};
+
+// ---------- 1. TCO ----------
+const tcoDiv=document.getElementById("tco");
+function renderTCO(m){
+  const meas=MEAS[m];
+  const sorted=[...PROV].sort((a,b)=>meas.get(a)-meas.get(b));
+  const max=meas.get(sorted[sorted.length-1]);
+  const avg=PROV.reduce((a,p)=>a+meas.get(p),0)/PROV.length;
+  tcoDiv.innerHTML="";
+  sorted.forEach((p,i)=>{
+    const v=meas.get(p);
+    tcoDiv.innerHTML+=`<div class="tr${i===0?" best":""}">
+      <div class="tname">${p.id}<small>${p.sub}</small></div>
+      <div class="tbar"><div class="tfill" style="width:${v/max*100}%"></div><div class="avg" style="left:${avg/max*100}%"></div></div>
+      <div class="tval">${meas.fmt(v)}<small>${meas.unit}</small></div></div>`;
+  });
+  const leader=sorted[0].id;
+  const note = m==="dia"
+    ? `Líder por <b>${meas.unit}</b>: <b>${leader}</b>. Ojo: por día operativo el orden cambia — un proveedor lento "abarata" su día pero encarece el pozo. <b>La medida de normalización es una decisión, no un detalle.</b>`
+    : `Líder por <b>${meas.unit}</b>: <b>${leader}</b>. La brecha contra el promedio (línea roja) es el tamaño de la oportunidad de migrar volumen.`;
+  document.getElementById("rankmsg").innerHTML=note;
+}
+document.querySelectorAll(".norm button").forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll(".norm button").forEach(x=>x.classList.remove("on"));b.classList.add("on");renderTCO(b.dataset.m);};
+});
+renderTCO("pozo");
+
+// ---------- 2. performance ----------
+const pfDiv=document.getElementById("perf");
+[...PROV].sort((a,b)=>b.perf-a.perf).forEach(p=>{
+  pfDiv.innerHTML+=`<div class="pf${p.perf<80?" low":""}">
+    <div class="tname">${p.id}<small>VPE ${p.vpe} m/día</small></div>
+    <div class="pf-track"><div class="pf-fill" style="width:${p.perf}%"></div><div class="pf-thr" style="left:80%"></div></div>
+    <div class="pf-val">${p.perf}<small>score</small></div></div>`;
+});
+
+// ---------- 3. frentes ----------
+const frDiv=document.getElementById("fr");
+const totF=PROV.reduce((a,p)=>a+p.fr,0);
+[...PROV].sort((a,b)=>b.fr-a.fr).forEach(p=>{
+  frDiv.innerHTML+=`<div class="fr">
+    <div class="tname">${p.id}</div>
+    <div class="fr-track"><div class="fr-fill" style="width:${p.fr/totF*100}%"></div></div>
+    <div class="fr-val">${p.fr} <small>(${Math.round(p.fr/totF*100)}%)</small></div></div>`;
+});
+
+// ---------- 4. vencimientos (8 trimestres: Q1-26 .. Q4-27) ----------
+const CONTR=[
+  {id:"Proveedor B",     fr:5, monto:48, endQ:1, note:"5 frentes"},
+  {id:"Proveedor C", fr:2, monto:12, endQ:2, note:"2 frentes · spot"},
+  {id:"Proveedor A",     fr:4, monto:61, endQ:3, note:"4 frentes"},
+  {id:"Proveedor D",   fr:4, monto:86, endQ:5, note:"4 frentes"},
+];
+const tlDiv=document.getElementById("tl");
+CONTR.forEach(c=>{
+  const w=c.endQ/8*100;
+  const cl=c.endQ<=2?"red":c.endQ<=4?"amb":"grn";
+  tlDiv.innerHTML+=`<div class="tl-row">
+    <div class="tl-name">${c.id}<small>${c.note}</small></div>
+    <div class="tl-lane"><div class="tl-bar ${cl}" style="left:0;width:${w}%">${c.monto} MUSD<small>vence Q${((c.endQ-1)%4)+1}·${c.endQ<=4?"26":"27"}</small></div></div></div>`;
+});
+
+// ---------- 5a. concentración: 16 dots ----------
+const dotsDiv=document.getElementById("dots");
+// 4 contratados (navy), 3 locales no contratados (steel border), 9 internacionales (grey border)
+const labels=["A","B","C","D"];
+for(let i=0;i<16;i++){
+  const cls=i<4?"us":i<7?"loc":"";
+  const lab=i<4?`<small>${labels[i]}</small>`:"";
+  dotsDiv.innerHTML+=`<div class="dt ${cls}">${lab}</div>`;
+}
+
+// ---------- 5b. estructura de mercado: HHI + CR3 + share ----------
+// share de oferta de equipos en plaza (ficticio, calibrado con lámina 67 del playbook)
+const MKT=[
+  {n:"Proveedor B", s:32},
+  {n:"Proveedor D", s:24},
+  {n:"Proveedor A", s:15},
+  {n:"Mkt-4",       s:9},
+  {n:"Mkt-5",       s:6},
+  {n:"Mkt-6",       s:6},
+  {n:"Otros (×3)",  s:8},  // tres jugadores chicos ~2.7% c/u
+];
+// HHI = suma de shares^2 (jugadores chicos al cuadrado individual)
+const HHI = 32*32 + 24*24 + 15*15 + 9*9 + 6*6 + 6*6 + 3*(2.7*2.7);
+const CR3 = 32+24+15;
+document.getElementById("hhi-val").textContent = Math.round(HHI).toLocaleString("es-AR");
+document.getElementById("cr3-val").textContent = CR3+"%";
+// aguja: escala visual 0–4000 sobre zonas flex 15/10/15 (1500/1000/1500)
+const pos = Math.min(HHI,4000)/4000*100;
+document.getElementById("hhi-needle").style.left = pos+"%";
+// barras de share
+const shDiv=document.getElementById("share");
+MKT.forEach((m,i)=>{
+  shDiv.innerHTML+=`<div class="sh-row${i<3?" top3":""}">
+    <div class="sh-name">${m.n}</div>
+    <div class="sh-track"><div class="sh-fill" style="width:${m.s/32*100}%"></div></div>
+    <div class="sh-val">${m.s}%</div></div>`;
+});
+document.getElementById("hhi-read").innerHTML =
+  `HHI <b>${Math.round(HHI).toLocaleString("es-AR")}</b> → <b>oligopolio moderado</b>: 3 jugadores concentran el ${CR3}% de la oferta. Hay alternativas (panel A), pero el poder de negociación real lo dan los 3 grandes — si uno se retira o se fusiona, el HHI salta a zona crítica. <b>Monitorear M&As del mercado es parte del indicador.</b>`;
 </script>
 </body>
 </html>
