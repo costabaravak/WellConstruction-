@@ -65,14 +65,26 @@ main{max-width:1220px;margin:0 auto;padding:24px 28px 50px}
 .pf-val small{display:block;font-weight:500;font-size:10px;color:var(--grey)}
 .thr-note{font-size:11px;color:var(--grey);margin-top:4px}
 
-/* 3. frentes */
-.fr{display:grid;grid-template-columns:104px 1fr 96px;gap:10px;align-items:center;margin-bottom:11px}
-.fr-track{height:22px;background:#EEF1F6;border-radius:3px;display:flex;overflow:hidden}
-.fr-fill{height:100%;background:var(--steel)}
-.fr-val{font-family:'Archivo';font-weight:800;font-size:15px;color:var(--navy);text-align:right}
-.fr-val small{font-weight:500;font-size:11px;color:var(--grey)}
-.fr-tot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:6px;padding-top:8px;font-size:12px;color:var(--grey)}
-.fr-tot b{font-family:'Archivo';font-weight:800;color:var(--navy)}
+/* 1b. TCO apilado */
+.tbar.stk{display:flex;overflow:visible;background:transparent}
+.seg{height:100%;position:relative;transition:width .35s}
+.seg:first-child{border-radius:3px 0 0 3px}
+.seg:hover{filter:brightness(1.15)}
+.seg .tip{display:none;position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:11px;padding:5px 9px;border-radius:4px;white-space:nowrap;z-index:6}
+.seg:hover .tip{display:block}
+.stk-leg{display:flex;gap:14px;flex-wrap:wrap;margin:4px 0 12px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--grey)}
+
+/* 3. market share — torta */
+.pie-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;padding:6px 0}
+.pie{width:172px;height:172px;border-radius:50%;position:relative;flex-shrink:0}
+.pie-hole{position:absolute;inset:40px;background:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 1px var(--line) inset}
+.pie-hole b{font-family:'Archivo';font-weight:800;font-size:26px;color:var(--navy);line-height:1}
+.pie-hole small{font-size:10.5px;color:var(--grey)}
+.pie-leg{display:flex;flex-direction:column;gap:9px;min-width:190px}
+.pl{display:grid;grid-template-columns:14px 1fr auto;gap:9px;align-items:center;font-size:12.5px}
+.pl i{width:14px;height:14px;border-radius:3px}
+.pl b{font-family:'Archivo';font-weight:800;color:var(--navy)}
+.pl small{color:var(--grey);margin-left:4px}
 
 /* 4. vencimientos */
 .tl-head{display:grid;grid-template-columns:150px 1fr;gap:10px;font-family:'Archivo Narrow';font-weight:600;font-size:10.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -152,13 +164,14 @@ footer b{color:var(--ink)}
     <!-- 1. TCO NORMALIZADO -->
     <section class="card" aria-label="TCO normalizado">
       <div class="c-head"><div class="c-title">1 · TCO normalizado por proveedor</div><div class="c-q">¿Quién es realmente más barato?</div></div>
-      <div class="c-note">El ranking <b>depende de la medida de normalización</b> — probá cambiarla: el orden se reordena. Línea roja = promedio.</div>
+      <div class="c-note">Barra apilada = <b>ticket tipo desagregado</b>: Tarifa A, B, C, adicionales, costos DTM y bonos. El ranking <b>depende de la medida de normalización</b> — probá cambiarla. Hover sobre cada segmento muestra el detalle.</div>
       <div class="norm" role="tablist" aria-label="Medida de normalización">
         <button class="on" data-m="pozo">por pozo</button>
         <button data-m="metro">por metro perforado</button>
         <button data-m="dia">por día operativo</button>
       </div>
       <div id="tco"></div>
+      <div class="stk-leg" id="tco-leg"></div>
       <div class="rankmsg" id="rankmsg"></div>
     </section>
 
@@ -170,12 +183,14 @@ footer b{color:var(--ink)}
       <div class="thr-note">│ umbral mínimo de performance = 80</div>
     </section>
 
-    <!-- 3. FRENTES -->
-    <section class="card" aria-label="Frentes asignados">
-      <div class="c-head"><div class="c-title">3 · Frentes asignados</div><div class="c-q">¿Cómo repartí la torta hoy?</div></div>
-      <div class="c-note">Asignación vigente por proveedor. Es la <b>línea de base</b> contra la que se compara la asignación óptima por TCO.</div>
-      <div id="fr"></div>
-      <div class="fr-tot"><span>Total frentes activos</span><b>15</b></div>
+    <!-- 3. MARKET SHARE (FRENTES) -->
+    <section class="card" aria-label="Market share - frentes asignados">
+      <div class="c-head"><div class="c-title">3 · Market share — frentes asignados</div><div class="c-q">¿Cómo repartí la torta hoy?</div></div>
+      <div class="c-note">Participación de cada proveedor en los frentes de YPF. Es la <b>línea de base</b> contra la que se compara la asignación óptima por TCO.</div>
+      <div class="pie-wrap">
+        <div class="pie" id="pie"><div class="pie-hole"><b>15</b><small>frentes</small></div></div>
+        <div class="pie-leg" id="pie-leg"></div>
+      </div>
     </section>
 
     <!-- 4. VENCIMIENTOS -->
@@ -241,16 +256,27 @@ footer b{color:var(--ink)}
 <script>
 // ---------- datos ficticios ----------
 // metros por pozo ~5.500; días = 5500 / VPE
+// ticket tipo desagregado (KUSD/pozo): tA/tB/tC = tarifas, ad = adicionales, dtm, bono
 const PROV=[
-  {id:"Proveedor A",     sub:"local · 4 frentes",        pozo:1058, vpe:365, perf:92, fr:4},
-  {id:"Proveedor B",     sub:"internacional · 5 frentes",pozo:1129, vpe:352, perf:88, fr:5},
-  {id:"Proveedor C", sub:"spot · 2 frentes",         pozo:1257, vpe:310, perf:76, fr:2},
-  {id:"Proveedor D",   sub:"internacional · 4 frentes",pozo:1292, vpe:358, perf:90, fr:4},
+  {id:"Proveedor A", sub:"local · 4 frentes",         tk:{tA:410,tB:195,tC:35,ad:290,dtm:78, bono:50}, vpe:365, perf:92, fr:4},
+  {id:"Proveedor B", sub:"internacional · 5 frentes", tk:{tA:425,tB:200,tC:40,ad:330,dtm:82, bono:52}, vpe:352, perf:88, fr:5},
+  {id:"Proveedor C", sub:"spot · 2 frentes",          tk:{tA:460,tB:230,tC:32,ad:380,dtm:110,bono:45}, vpe:310, perf:76, fr:2},
+  {id:"Proveedor D", sub:"internacional · 4 frentes", tk:{tA:440,tB:235,tC:30,ad:455,dtm:85, bono:47}, vpe:358, perf:90, fr:4},
+];
+const COMP=[
+  {k:"tA",  n:"Tarifa A",    c:"#27405F"},
+  {k:"tB",  n:"Tarifa B",    c:"#5B84B1"},
+  {k:"tC",  n:"Tarifa C",    c:"#B8C4D4"},
+  {k:"ad",  n:"Adicionales", c:"#8FB0CE"},
+  {k:"dtm", n:"Costos DTM",  c:"#4E8D7C"},
+  {k:"bono",n:"Bonos",       c:"#D8B45A"},
 ];
 const M=5500;
 PROV.forEach(p=>{
-  p.metro = p.pozo*1000/M;            // USD por metro
-  p.dia   = p.pozo/(M/p.vpe);         // KUSD por día operativo
+  p.pozo  = Object.values(p.tk).reduce((a,b)=>a+b,0);   // KUSD/pozo (suma del ticket)
+  p.metro = p.pozo*1000/M;                              // USD por metro
+  p.dia   = p.pozo/(M/p.vpe);                           // KUSD por día operativo
+  p.divisor = {pozo:1, metro:M/1000, dia:(M/p.vpe)};    // para escalar componentes
 });
 const MEAS={
   pozo:{get:p=>p.pozo, unit:"KUSD/pozo", fmt:v=>Math.round(v).toLocaleString("es-AR")},
@@ -258,7 +284,7 @@ const MEAS={
   dia:{get:p=>p.dia,  unit:"KUSD/día op.", fmt:v=>v.toFixed(1)}
 };
 
-// ---------- 1. TCO ----------
+// ---------- 1. TCO (apilado por componente del ticket tipo) ----------
 const tcoDiv=document.getElementById("tco");
 function renderTCO(m){
   const meas=MEAS[m];
@@ -267,16 +293,23 @@ function renderTCO(m){
   const avg=PROV.reduce((a,p)=>a+meas.get(p),0)/PROV.length;
   tcoDiv.innerHTML="";
   sorted.forEach((p,i)=>{
-    const v=meas.get(p);
+    const v=meas.get(p), d=p.divisor[m];
+    const segs=COMP.map(c=>{
+      const cv=p.tk[c.k]/d;                  // componente en la unidad elegida
+      const w=cv/max*100;                    // ancho relativo al máximo del panel
+      const lbl = m==="metro" ? Math.round(cv*1000)/1 : (m==="dia"?cv.toFixed(1):Math.round(cv));
+      return `<div class="seg" style="width:${w}%;background:${c.c}"><span class="tip">${c.n}: ${typeof lbl==="number"?lbl.toLocaleString("es-AR"):lbl} ${meas.unit} (${Math.round(p.tk[c.k]/p.pozo*100)}%)</span></div>`;
+    }).join("");
     tcoDiv.innerHTML+=`<div class="tr${i===0?" best":""}">
       <div class="tname">${p.id}<small>${p.sub}</small></div>
-      <div class="tbar"><div class="tfill" style="width:${v/max*100}%"></div><div class="avg" style="left:${avg/max*100}%"></div></div>
+      <div class="tbar stk">${segs}<div class="avg" style="left:${avg/max*100}%"></div></div>
       <div class="tval">${meas.fmt(v)}<small>${meas.unit}</small></div></div>`;
   });
+  document.getElementById("tco-leg").innerHTML=COMP.map(c=>`<span class="dotl"><i style="background:${c.c}"></i>${c.n}</span>`).join("");
   const leader=sorted[0].id;
   const note = m==="dia"
     ? `Líder por <b>${meas.unit}</b>: <b>${leader}</b>. Ojo: por día operativo el orden cambia — un proveedor lento "abarata" su día pero encarece el pozo. <b>La medida de normalización es una decisión, no un detalle.</b>`
-    : `Líder por <b>${meas.unit}</b>: <b>${leader}</b>. La brecha contra el promedio (línea roja) es el tamaño de la oportunidad de migrar volumen.`;
+    : `Líder por <b>${meas.unit}</b>: <b>${leader}</b>. La desagregación dice si la brecha es <b>negociable</b> (adicionales, bonos) o <b>estructural</b> (tarifa base). Línea roja = promedio.`;
   document.getElementById("rankmsg").innerHTML=note;
 }
 document.querySelectorAll(".norm button").forEach(b=>{
@@ -293,15 +326,19 @@ const pfDiv=document.getElementById("perf");
     <div class="pf-val">${p.perf}<small>score</small></div></div>`;
 });
 
-// ---------- 3. frentes ----------
-const frDiv=document.getElementById("fr");
+// ---------- 3. market share — torta (frentes asignados) ----------
+const PIE_C={"Proveedor A":"#1F3864","Proveedor B":"#2E75B6","Proveedor C":"#C9A227","Proveedor D":"#4E8D7C"};
 const totF=PROV.reduce((a,p)=>a+p.fr,0);
+let acc=0; const slices=[];
 [...PROV].sort((a,b)=>b.fr-a.fr).forEach(p=>{
-  frDiv.innerHTML+=`<div class="fr">
-    <div class="tname">${p.id}</div>
-    <div class="fr-track"><div class="fr-fill" style="width:${p.fr/totF*100}%"></div></div>
-    <div class="fr-val">${p.fr} <small>(${Math.round(p.fr/totF*100)}%)</small></div></div>`;
+  const from=acc/totF*360, to=(acc+p.fr)/totF*360;
+  slices.push(`${PIE_C[p.id]} ${from}deg ${to}deg`);
+  acc+=p.fr;
 });
+document.getElementById("pie").style.background=`conic-gradient(${slices.join(",")})`;
+document.getElementById("pie-leg").innerHTML=[...PROV].sort((a,b)=>b.fr-a.fr).map(p=>
+  `<div class="pl"><i style="background:${PIE_C[p.id]}"></i><span>${p.id}</span><span><b>${p.fr}</b><small>(${Math.round(p.fr/totF*100)}%)</small></span></div>`
+).join("");
 
 // ---------- 4. vencimientos (8 trimestres: Q1-26 .. Q4-27) ----------
 const CONTR=[
