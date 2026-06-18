@@ -159,10 +159,33 @@ main{max-width:1220px;margin:0 auto;padding:24px 28px 50px}
 .fw-res.bad{color:var(--bad)}
 .fw-res small{display:block;font-weight:600;font-size:9.5px;color:var(--grey)}
 
+/* 7. lead time del proceso */
+.lt-grid{display:grid;grid-template-columns:1fr 250px;gap:24px}
+.lt-row{display:grid;grid-template-columns:200px 1fr 92px;gap:10px;align-items:center;margin-bottom:9px}
+.lt-name{font-family:'Archivo Narrow';font-weight:700;font-size:12.5px}
+.lt-name small{display:block;font-weight:500;font-size:10px;color:var(--grey)}
+.lt-lane{position:relative;height:26px}
+.lt-obj{position:absolute;top:3px;height:9px;background:#C9D3E2;border-radius:2px}
+.lt-real{position:absolute;top:13px;height:9px;border-radius:2px;background:var(--blue)}
+.lt-real.over{background:var(--bad)}
+.lt-dev{font-family:'Archivo';font-weight:800;font-size:13px;text-align:right}
+.lt-dev.over{color:var(--bad)}
+.lt-dev.ok{color:var(--ok)}
+.lt-dev small{display:block;font-weight:500;font-size:9.5px;color:var(--grey)}
+.lt-leg{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--grey)}
+.lt-side{display:flex;flex-direction:column;gap:14px}
+.lt-tot{border:1px solid var(--line);border-radius:6px;padding:14px 16px;background:#FBFCFE}
+.lt-tot-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;font-size:12.5px;color:var(--grey)}
+.lt-tot-row b{font-family:'Archivo';font-weight:800;font-size:16px;color:var(--navy)}
+.lt-tot-row.big b{font-size:26px}
+.lt-tot-row .dev{color:var(--bad)}
+.lt-bottleneck{background:#FBF1EF;border:1px solid #E7C3BC;border-radius:6px;padding:12px 14px;font-size:12px;color:#7A2E22}
+.lt-bottleneck b{color:var(--bad)}
+
 footer{max-width:1220px;margin:0 auto;padding:0 28px 36px;font-size:11px;color:var(--grey)}
 footer b{color:var(--ink)}
 
-@media(max-width:920px){.grid{grid-template-columns:1fr}.conc{grid-template-columns:1fr}.conc2{grid-template-columns:1fr}.sd-grid{grid-template-columns:1fr}.dots{grid-template-columns:repeat(8,24px)}.dt{width:24px;height:24px}.hhi-top{flex-wrap:wrap}}
+@media(max-width:920px){.grid{grid-template-columns:1fr}.conc{grid-template-columns:1fr}.conc2{grid-template-columns:1fr}.sd-grid{grid-template-columns:1fr}.lt-grid{grid-template-columns:1fr}.dots{grid-template-columns:repeat(8,24px)}.dt{width:24px;height:24px}.hhi-top{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -173,7 +196,7 @@ footer b{color:var(--ink)}
     <div>
       <div class="eyebrow">YPF Supply Chain · Well Construction</div>
       <h1>Dashboard de indicadores <span>— Rigs</span></h1>
-      <div class="hd-sub">Seis indicadores, cada uno responde una pregunta de asignación: cuánto cuesta (normalizado), qué equipo rinde, cuánto tiene, cuándo puedo moverlo, cuántas alternativas tengo y qué tan colapsada está la plaza.</div>
+      <div class="hd-sub">Siete indicadores, cada uno responde una pregunta de asignación: cuánto cuesta (normalizado), qué equipo rinde, cuánto tiene, cuándo puedo moverlo, cuántas alternativas tengo y qué tan colapsada está la plaza.</div>
     </div>
     <div class="mock">Mockup · datos ficticios</div>
   </div>
@@ -293,11 +316,35 @@ footer b{color:var(--ink)}
       </div>
     </section>
 
+    <!-- 7. LEAD TIME DEL PROCESO DE CONTRATACION -->
+    <section class="card full" aria-label="Lead time del proceso de contratacion">
+      <div class="c-head"><div class="c-title">7 · Lead time del proceso de contratación</div><div class="c-q">¿Cuánto tarda contratar de punta a punta — y dónde se va el tiempo?</div></div>
+      <div class="c-note">Duración de cada etapa del proceso, <b>objetivo vs. real</b>. El playbook fija un camino crítico de referencia; el desvío por etapa muestra <b>dónde se pierde el tiempo</b> (el cuello de botella), no solo el total.</div>
+      <div class="lt-grid">
+        <div>
+          <div id="lt-stages"></div>
+          <div class="lt-leg">
+            <span class="lg"><span class="sw" style="background:#C9D3E2"></span>Objetivo</span>
+            <span class="lg"><span class="sw" style="background:var(--blue)"></span>Real (en plazo)</span>
+            <span class="lg"><span class="sw" style="background:var(--bad)"></span>Real (con desvío)</span>
+          </div>
+        </div>
+        <div class="lt-side">
+          <div class="lt-tot">
+            <div class="lt-tot-row"><span>Objetivo total</span><b id="lt-obj">—</b></div>
+            <div class="lt-tot-row big"><span>Lead time real</span><b id="lt-real">—</b></div>
+            <div class="lt-tot-row"><span>Desvío</span><b id="lt-dev" class="dev">—</b></div>
+          </div>
+          <div class="lt-bottleneck" id="lt-bn"></div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </main>
 
 <footer>
-  <b>Mockup conceptual</b> — proveedores y valores ficticios calibrados con la estructura del Playbook de Category Management. Seis indicadores: TCO normalizado (con medida seleccionable), ranking de equipos ponderado (VPE·NPT·DTM·SKD), frentes asignados, vencimientos en monto y plazo, concentración (alternativas + HHI) y cruce oferta–demanda de la plaza.
+  <b>Mockup conceptual</b> — proveedores y valores ficticios calibrados con la estructura del Playbook de Category Management. Siete indicadores: TCO normalizado (con medida seleccionable), ranking de equipos ponderado (VPE·NPT·DTM·SKD), frentes asignados, vencimientos en monto y plazo, concentración (alternativas + HHI), cruce oferta–demanda y lead time del proceso de contratación.
 </footer>
 
 <script>
@@ -521,6 +568,47 @@ FWD.forEach(f=>{
 });
 document.getElementById("sd-alert").innerHTML=
   `La barra azul es la demanda incremental del escenario; la línea verde, los <b>${PLAZA.libres} rigs libres</b> de la plaza. En <b>Optimista+</b> el déficit es de ${-worst} rigs: con lead time de importación de 6–9 meses, <b>la decisión de traer equipos hay que tomarla antes de que el escenario se confirme</b> — esperar la certeza es llegar tarde.`;
+
+// ---------- 7. lead time del proceso de contratación ----------
+// etapas del proceso E2E con objetivo y real (días). Calibrado con el camino crítico del playbook.
+const LT=[
+  {n:"Entendimiento demanda",  d:"PA/PN + requisitos técnicos", obj:20, real:22},
+  {n:"Análisis de mercado",    d:"market research + should-cost/TCO", obj:25, real:28},
+  {n:"Estrategia + validación", d:"comités ejecutivos", obj:15, real:24},
+  {n:"RFx / sourcing",         d:"identificación + despliegue", obj:20, real:21},
+  {n:"Evaluación + negociación",d:"scorecards + rondas", obj:25, real:31},
+  {n:"Adjudicación + firma",   d:"SOLPE + contrato", obj:10, real:14},
+  {n:"Onboarding / handover",  d:"catalogación + traspaso", obj:15, real:16},
+];
+const objTot=LT.reduce((a,s)=>a+s.obj,0);
+const realTot=LT.reduce((a,s)=>a+s.real,0);
+const maxLT=Math.max(...LT.map(s=>Math.max(s.obj,s.real)));
+// cuello de botella = mayor desvío absoluto
+let bn=LT[0]; LT.forEach(s=>{ if((s.real-s.obj)>(bn.real-bn.obj)) bn=s; });
+
+const ltDiv=document.getElementById("lt-stages");
+LT.forEach(s=>{
+  const dev=s.real-s.obj, over=dev>0;
+  const devTxt = dev>0?`+${dev} d`:dev<0?`${dev} d`:`en plazo`;
+  ltDiv.innerHTML+=`<div class="lt-row">
+    <div class="lt-name">${s.n}<small>${s.d}</small></div>
+    <div class="lt-lane">
+      <div class="lt-obj" style="width:${s.obj/maxLT*100}%"></div>
+      <div class="lt-real${over?" over":""}" style="width:${s.real/maxLT*100}%"></div>
+    </div>
+    <div class="lt-dev ${over?"over":"ok"}">${devTxt}<small>obj ${s.obj} · real ${s.real}</small></div>
+  </div>`;
+});
+
+const devTot=realTot-objTot, devPct=Math.round(devTot/objTot*100);
+document.getElementById("lt-obj").textContent=objTot+" días";
+document.getElementById("lt-real").textContent=realTot+" días";
+const dEl=document.getElementById("lt-dev");
+dEl.textContent=(devTot>=0?"+":"")+devTot+" d ("+(devPct>=0?"+":"")+devPct+"%)";
+dEl.className="dev"+(devTot>0?"":" ");
+
+document.getElementById("lt-bn").innerHTML=
+  `Cuello de botella: <b>${bn.n}</b> (+${bn.real-bn.obj} días sobre objetivo). Es la etapa de <b>${bn.d}</b> — coincide con el riesgo del playbook de gobernanza ceremonial: comités sin criterio de decisión claro alargan el camino crítico. <b>Acá conviene atacar el desvío primero.</b>`;
 </script>
 </body>
 </html>
