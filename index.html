@@ -205,7 +205,7 @@ footer b{color:var(--ink)}
 
     <!-- 1. TCO NORMALIZADO -->
     <section class="card" aria-label="TCO normalizado">
-      <div class="c-head"><div class="c-title">1 · TCO normalizado por proveedor</div><div class="c-q">¿Quién es realmente más barato?</div></div>
+      <div class="c-head"><div class="c-title">1 · TCO normalizado por proveedor</div></div>
       <div class="c-note">Barra apilada = <b>ticket tipo desagregado</b>: Tarifa A, B, C, adicionales, costos DTM y bonos. El ranking <b>depende de la medida de normalización</b> — probá cambiarla. Hover sobre cada segmento muestra el detalle.</div>
       <div class="norm" role="tablist" aria-label="Medida de normalización">
         <button class="on" data-m="pozo">por pozo</button>
@@ -219,7 +219,7 @@ footer b{color:var(--ink)}
 
     <!-- 2. RANKING DE EQUIPOS -->
     <section class="card" aria-label="Ranking de equipos">
-      <div class="c-head"><div class="c-title">2 · Ranking de equipos</div><div class="c-q">¿Qué equipo rinde — y cuál devuelvo?</div></div>
+      <div class="c-head"><div class="c-title">2 · Ranking de equipos</div></div>
       <div class="c-note">Score ponderado por equipo: <b>VPE 40% · NPT 25% · DTM 20% · SKD 15%</b>. Pasá el mouse para ver el detalle. Score 0–100 contra bandas benchmark del mercado. Bajo el umbral 60 = candidato a devolución en el vencimiento.</div>
       <div id="rkeq"></div>
       <div class="thr-note">│ umbral mínimo = 60 · el ranking es por equipo porque el contrato se renueva equipo por equipo</div>
@@ -227,7 +227,7 @@ footer b{color:var(--ink)}
 
     <!-- 3. MARKET SHARE (FRENTES) -->
     <section class="card" aria-label="Market share - frentes asignados">
-      <div class="c-head"><div class="c-title">3 · Market share — frentes asignados</div><div class="c-q">¿Cómo repartí la torta hoy?</div></div>
+      <div class="c-head"><div class="c-title">3 · Market share — frentes asignados</div></div>
       <div class="c-note">Participación de cada proveedor en los frentes de YPF. Es la <b>línea de base</b> contra la que se compara la asignación óptima por TCO.</div>
       <div class="pie-wrap">
         <div class="pie" id="pie"><div class="pie-hole"><b>15</b><small>frentes</small></div></div>
@@ -237,7 +237,7 @@ footer b{color:var(--ink)}
 
     <!-- 4. VENCIMIENTOS -->
     <section class="card" aria-label="Vencimientos de contratos">
-      <div class="c-head"><div class="c-title">4 · Vencimientos de contratos</div><div class="c-q">¿Cuándo y cuánto puedo mover?</div></div>
+      <div class="c-head"><div class="c-title">4 · Vencimientos de contratos</div></div>
       <div class="c-note">Cada barra es un contrato: el <b>largo es el plazo</b> remanente y la etiqueta el <b>monto</b> comprometido. Color = urgencia de la ventana de negociación.</div>
       <div class="tl-head"><span></span><div class="tl-q"><span>Q1·26</span><span>Q2</span><span>Q3</span><span>Q4</span><span>Q1·27</span><span>Q2</span><span>Q3</span><span>Q4</span></div></div>
       <div id="tl"></div>
@@ -250,7 +250,7 @@ footer b{color:var(--ink)}
 
     <!-- 5. CONCENTRACION -->
     <section class="card full" aria-label="Concentración de proveedores vs mercado">
-      <div class="c-head"><div class="c-title">5 · Concentración: alternativas y estructura del mercado</div><div class="c-q">¿Tengo alternativas — y qué tan repartida está la oferta entre ellas?</div></div>
+      <div class="c-head"><div class="c-title">5 · Concentración: alternativas y estructura del mercado</div></div>
       <div class="c-note">Dos lecturas complementarias: <b>cuántas alternativas reales tengo</b> (contratados / mercado) y <b>qué tan monopólica u oligopólica es la oferta</b> (HHI sobre el share de equipos). Pueden existir 16 proveedores y aun así 3 dominar el 70%.</div>
       <div class="conc2">
         <div class="conc-half">
@@ -290,7 +290,7 @@ footer b{color:var(--ink)}
 
     <!-- 6. CRUCE OFERTA-DEMANDA -->
     <section class="card full" aria-label="Cruce oferta y demanda de la plaza">
-      <div class="c-head"><div class="c-title">6 · Cruce oferta–demanda: ¿qué tan colapsada está la plaza?</div><div class="c-q">¿Hay rigs disponibles si necesito crecer — o llego tarde?</div></div>
+      <div class="c-head"><div class="c-title">6 · Cruce oferta–demanda: ¿qué tan colapsada está la plaza?</div></div>
       <div class="c-note">Oferta total de la plaza local contra ocupación actual y demanda futura por escenario. Cuando los libres no alcanzan, la alternativa es <b>traer equipos del exterior (lead time 6–9 meses)</b> — por eso este cruce se mira hacia adelante, no solo hoy.</div>
       <div class="sd-grid">
         <div>
@@ -316,7 +316,7 @@ footer b{color:var(--ink)}
 
     <!-- 7. SHOULD-COST DEL SERVICIO -->
     <section class="card full" aria-label="Should-cost del servicio">
-      <div class="c-head"><div class="c-title">7 · Should-cost del servicio</div><div class="c-q">¿Cuánto le cuesta producir al proveedor — y cuánto es margen?</div></div>
+      <div class="c-head"><div class="c-title">7 · Should-cost del servicio</div></div>
       <div class="c-note">Reconstrucción <b>bottom-up</b> de la estructura de costos de un rig high-spec (USD/día), como lo plantea el playbook: se descompone el costo del proveedor en sus drivers para <b>individualizar su margen</b>. La brecha entre el precio que paga YPF y el should-cost <b>es la palanca de negociación</b>.</div>
       <div class="sc-grid">
         <div>
